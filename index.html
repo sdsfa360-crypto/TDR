@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Detroit | المتجر الشامل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Cairo', sans-serif; background-color: #0a0a0a; color: white; min-height: 100vh; overflow-x: hidden; }
+
+        .kbab-watermark { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-family: 'Cairo', sans-serif; font-size: 5rem; font-weight: 900; color: rgba(255,255,255,0.025); letter-spacing: 18px; text-transform: uppercase; pointer-events: none; z-index: 0; line-height: 1; padding-bottom: 0; user-select: none; }
+
+        .top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: rgba(10,10,10,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a; }
+        .top-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .top-left  { display: flex; align-items: center; gap: 8px; }
+
+        .login-btn { display: flex; align-items: center; gap: 7px; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 7px 14px; color: #aaa; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .login-btn:hover { border-color: #00e5ff; color: #00e5ff; }
+
+        #profileArea { display: none; align-items: center; gap: 8px; background: #111; border: 1px solid #2a2a2a; border-radius: 10px; padding: 5px 12px 5px 8px; cursor: pointer; transition: all 0.25s; position: relative; }
+        #profileArea:hover { border-color: #00e5ff; }
+        #profileAvatar { width:32px; height:32px; border-radius:50%; object-fit:cover; border:2px solid #ffb400; flex-shrink:0; display:block; }
+        #profileName { font-size:0.78rem; font-weight:700; color:#fff; max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .online-dot { width:8px; height:8px; background:#22c55e; border-radius:50%; border:1.5px solid #0a0a0a; position:absolute; bottom:7px; right:17px; }
+        #profileDropdown { display:none; position:absolute; top:calc(100% + 8px); right:0; background:#111; border:1px solid #222; border-radius:12px; padding:10px; min-width:180px; z-index:5000; box-shadow:0 8px 32px rgba(0,0,0,0.5); }
+        #profileDropdown.open { display:block; }
+        .dropdown-info { padding:8px 10px 10px; border-bottom:1px solid #1a1a1a; margin-bottom:8px; }
+        .dropdown-info .d-name { font-size:0.82rem; font-weight:900; color:#fff; }
+        .dropdown-info .d-email { font-size:0.68rem; color:#444; margin-top:2px; }
+        .dropdown-btn { width:100%; background:none; border:none; color:#aaa; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; text-align:right; padding:8px 10px; border-radius:7px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all 0.2s; }
+        .dropdown-btn:hover { background:#1a1a1a; color:#fff; }
+        .dropdown-btn.logout { color:#ef4444; }
+        .dropdown-btn.logout:hover { background:rgba(239,68,68,0.1); }
+
+        .cart-btn { display:flex; align-items:center; gap:7px; background:rgba(255,180,0,0.08); border:1px solid rgba(255,180,0,0.25); border-radius:8px; padding:7px 14px; color:#ffb400; font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.25s; position:relative; }
+        .cart-btn:hover { background:rgba(255,180,0,0.14); border-color:#ffb400; }
+        .cart-count { position:absolute; top:-6px; right:-6px; background:#ffb400; color:#000; font-size:0.6rem; font-weight:900; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+        .contact-topbar-btn { display: flex; align-items: center; gap: 7px; background: rgba(114,137,218,0.10); border: 1px solid rgba(114,137,218,0.3); border-radius: 8px; padding: 7px 14px; color: #7289da; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .contact-topbar-btn:hover { background: rgba(114,137,218,0.2); border-color: #7289da; color: #fff; }
+
+        .admin-topbar-btn { display: flex; align-items: center; gap: 7px; background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 7px 14px; color: #ef4444; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .admin-topbar-btn:hover { background: rgba(239,68,68,0.2); border-color: #ef4444; color: #fff; }
+
+        .codes-topbar-btn { display: flex; align-items: center; gap: 7px; background: rgba(34,197,94,0.10); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 7px 14px; color: #22c55e; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .codes-topbar-btn:hover { background: rgba(34,197,94,0.2); border-color: #22c55e; color: #fff; }
+
+        /* ===== CART ===== */
+        .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:2000; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .cart-overlay.open { opacity:1; pointer-events:all; }
+        .cart-sidebar { position:fixed; top:0; right:0; width:340px; height:100%; background:#0f0f0f; border-left:1px solid #1e1e1e; z-index:2100; display:flex; flex-direction:column; transform:translateX(100%); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); direction:rtl; }
+        .cart-overlay.open .cart-sidebar { transform:translateX(0); }
+        .cart-header { padding:18px 18px 14px; border-bottom:1px solid #1a1a1a; display:flex; align-items:center; justify-content:space-between; }
+        .cart-header h3 { font-size:1rem; font-weight:900; color:#ffb400; }
+        .cart-close { background:none; border:none; color:#555; font-size:1.1rem; cursor:pointer; transition:color 0.2s; }
+        .cart-close:hover { color:#fff; }
+        .cart-items { flex:1; overflow-y:auto; padding:12px; }
+        .cart-empty { text-align:center; color:#333; padding:60px 20px; font-size:0.82rem; }
+        .cart-empty i { font-size:2rem; margin-bottom:10px; display:block; color:#222; }
+        .cart-item { display:flex; align-items:center; gap:10px; background:#141414; border:1px solid #1e1e1e; border-radius:9px; padding:10px 12px; margin-bottom:8px; }
+        .cart-item-img { width:46px; height:40px; border-radius:6px; object-fit:cover; flex-shrink:0; background:#1a1a1a; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+        .cart-item-info { flex:1; min-width:0; }
+        .cart-item-name { font-size:0.78rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .cart-item-price { font-size:0.7rem; color:#ffb400; font-weight:700; }
+        .cart-item-qty { display:flex; align-items:center; gap:6px; margin-top:4px; }
+        .cart-qty-btn { background:#1a1a1a; border:1px solid #2a2a2a; color:#fff; width:20px; height:20px; border-radius:4px; cursor:pointer; font-size:0.75rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .cart-qty-btn:hover { border-color:#ffb400; color:#ffb400; }
+        .cart-qty-num { font-size:0.75rem; font-weight:700; min-width:16px; text-align:center; }
+        .cart-item-remove { background:none; border:none; color:#333; cursor:pointer; font-size:0.85rem; transition:color 0.2s; flex-shrink:0; }
+        .cart-item-remove:hover { color:#ef4444; }
+        .cart-footer { padding:14px 18px; border-top:1px solid #1a1a1a; }
+        .cart-total { display:flex; justify-content:space-between; margin-bottom:12px; font-size:0.9rem; font-weight:700; }
+        .cart-total span:last-child { color:#ffb400; }
+        .cart-checkout { width:100%; padding:10px; background:#ffb400; color:#000; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.85rem; font-weight:900; cursor:pointer; transition:opacity 0.2s; }
+        .cart-checkout:hover { opacity:0.85; }
+
+        /* ===== OFFER BANNER ===== */
+        .offer-banner { display: none; background: linear-gradient(90deg, #ffb400, #ff6b00); padding: 10px 22px; text-align: center; font-size: 0.82rem; font-weight: 900; color: #000; position: sticky; top: 47px; z-index: 999; }
+        .offer-banner.show { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .offer-banner .offer-timer { font-family: monospace; font-size: 1rem; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 6px; }
+
+        /* ===== ORDERS PAGE ===== */
+        #ordersPage { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 3500; overflow-y: auto; padding: 0; direction: rtl; }
+        #ordersPage.open { display: block; }
+        .orders-header { background: rgba(10,10,10,0.98); border-bottom: 1px solid #1a1a1a; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
+        .orders-header h2 { font-size: 1.1rem; font-weight: 900; color: #ffb400; display: flex; align-items: center; gap: 9px; }
+        .orders-back-btn { display: flex; align-items: center; gap: 7px; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 8px 16px; color: #aaa; font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .orders-back-btn:hover { border-color: #00e5ff; color: #00e5ff; }
+        .orders-body { max-width: 700px; margin: 0 auto; padding: 28px 22px 60px; }
+        .order-card { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s; }
+        .order-card:hover { border-color: #2a2a2a; }
+        .order-icon { width: 46px; height: 46px; border-radius: 10px; background: rgba(255,180,0,0.08); border: 1px solid rgba(255,180,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; color: #ffb400; }
+        .order-info { flex: 1; min-width: 0; }
+        .order-name { font-size: 0.9rem; font-weight: 900; color: #fff; margin-bottom: 4px; }
+        .order-meta { font-size: 0.7rem; color: #444; display: flex; gap: 14px; flex-wrap: wrap; }
+        .order-meta span { display: flex; align-items: center; gap: 4px; }
+        .order-price { font-size: 1rem; font-weight: 900; color: #ffb400; flex-shrink: 0; }
+        .order-status { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
+        .order-status.pending { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+        .orders-summary-box { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-top: 20px; }
+        .orders-summary-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #1a1a1a; font-size: 0.82rem; color: #888; }
+        .orders-summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .orders-summary-row .val { color: #fff; font-weight: 700; }
+        .orders-summary-row.total .val { color: #ffb400; font-size: 1.1rem; }
+        .orders-discord-box { background: rgba(114,137,218,0.06); border: 1px solid rgba(114,137,218,0.15); border-radius: 12px; padding: 16px 18px; margin-top: 14px; display: flex; align-items: center; gap: 14px; }
+        .orders-discord-box i { font-size: 1.8rem; color: #7289da; flex-shrink: 0; }
+        .orders-discord-box p { font-size: 0.78rem; color: #aaa; line-height: 1.6; }
+        .orders-discord-box strong { color: #fff; }
+        .orders-section-title { font-size: 0.72rem; font-weight: 700; color: #444; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; margin-top: 28px; }
+        .orders-section-title:first-child { margin-top: 0; }
+
+        /* ===== CONTACT PAGE ===== */
+        #contactPage { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 3500; overflow-y: auto; direction: rtl; }
+        #contactPage.open { display: block; }
+        .contact-page-header { background: rgba(10,10,10,0.98); border-bottom: 1px solid #1a1a1a; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
+        .contact-page-header h2 { font-size: 1.1rem; font-weight: 900; color: #7289da; display: flex; align-items: center; gap: 9px; }
+        .contact-back-btn { display: flex; align-items: center; gap: 7px; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 8px 16px; color: #aaa; font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .contact-back-btn:hover { border-color: #7289da; color: #7289da; }
+        .contact-body { max-width: 680px; margin: 0 auto; padding: 36px 22px 80px; }
+        .contact-hero { text-align: center; padding: 30px 20px 36px; background: linear-gradient(135deg, rgba(114,137,218,0.08), rgba(0,0,0,0)); border: 1px solid rgba(114,137,218,0.15); border-radius: 18px; margin-bottom: 28px; }
+        .contact-hero .discord-big-icon { width: 80px; height: 80px; border-radius: 50%; background: rgba(114,137,218,0.15); border: 2px solid rgba(114,137,218,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 2.2rem; color: #7289da; }
+        .contact-hero h3 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
+        .contact-hero p { font-size: 0.82rem; color: #888; line-height: 1.8; max-width: 420px; margin: 0 auto 24px; }
+        .discord-join-btn { display: inline-flex; align-items: center; gap: 10px; background: #7289da; color: #fff; border: none; border-radius: 12px; padding: 14px 32px; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 900; cursor: pointer; transition: all 0.25s; text-decoration: none; box-shadow: 0 4px 20px rgba(114,137,218,0.3); }
+        .discord-join-btn:hover { background: #5b6eae; transform: translateY(-2px); }
+        .contact-steps-title { font-size: 0.72rem; font-weight: 700; color: #444; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px; }
+        .step-card { display: flex; align-items: flex-start; gap: 18px; background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px; margin-bottom: 10px; transition: border-color 0.25s, transform 0.25s; position: relative; overflow: hidden; }
+        .step-card:hover { border-color: rgba(114,137,218,0.3); transform: translateX(-4px); }
+        .step-num { width: 44px; height: 44px; border-radius: 50%; background: rgba(114,137,218,0.12); border: 2px solid rgba(114,137,218,0.25); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; color: #7289da; flex-shrink: 0; }
+        .step-content { flex: 1; }
+        .step-title { font-size: 0.95rem; font-weight: 900; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .step-title i { color: #7289da; font-size: 0.85rem; }
+        .step-desc { font-size: 0.78rem; color: #666; line-height: 1.75; }
+        .step-desc strong { color: #00e5ff; }
+        .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+        .info-card { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
+        .info-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .info-card-icon.blue { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); color: #00e5ff; }
+        .info-card-icon.yellow { background: rgba(255,180,0,0.08); border: 1px solid rgba(255,180,0,0.15); color: #ffb400; }
+        .info-card-icon.green { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); color: #22c55e; }
+        .info-card-icon.purple { background: rgba(114,137,218,0.08); border: 1px solid rgba(114,137,218,0.15); color: #7289da; }
+        .info-card-text .ic-title { font-size: 0.72rem; color: #444; margin-bottom: 3px; }
+        .info-card-text .ic-val { font-size: 0.82rem; font-weight: 700; color: #fff; }
+
+        /* ===== CODES MANAGER PAGE ===== */
+        #codesPage { display: none; position: fixed; inset: 0; background: #080808; z-index: 4000; overflow-y: auto; direction: rtl; }
+        #codesPage.open { display: block; }
+        .codes-page-header { background: rgba(8,8,8,0.98); border-bottom: 1px solid #1a1a1a; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
+        .codes-page-header h2 { font-size: 1.1rem; font-weight: 900; color: #22c55e; display: flex; align-items: center; gap: 9px; }
+        .codes-back-btn { display: flex; align-items: center; gap: 7px; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 8px 16px; color: #aaa; font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .codes-back-btn:hover { border-color: #22c55e; color: #22c55e; }
+        .codes-body { max-width: 1100px; margin: 0 auto; padding: 28px 22px 80px; }
+        
+        .codes-login-box { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 32px 28px; max-width: 400px; margin: 60px auto; text-align: center; }
+        .codes-login-box h3 { font-size: 1rem; font-weight: 900; color: #22c55e; margin-bottom: 6px; }
+        .codes-login-box p { font-size: 0.72rem; color: #444; margin-bottom: 22px; }
+        .codes-login-field { margin-bottom: 14px; text-align: right; }
+        .codes-login-field label { font-size: 0.72rem; color: #555; margin-bottom: 5px; display: block; }
+        .codes-login-field input { width: 100%; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 10px 13px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.82rem; outline: none; transition: border-color 0.25s; direction: rtl; }
+        .codes-login-field input:focus { border-color: #22c55e; }
+        .codes-login-btn { width: 100%; padding: 11px; background: #22c55e; color: #000; border: none; border-radius: 9px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 900; cursor: pointer; margin-top: 4px; transition: all 0.2s; }
+        .codes-login-btn:hover { opacity: 0.85; }
+        .codes-login-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: 7px; padding: 8px 12px; font-size: 0.73rem; color: #ef4444; margin-bottom: 12px; display: none; }
+        .codes-login-error.show { display: block; }
+        
+        .codes-panel-content { display: none; }
+        .codes-panel-content.visible { display: block; }
+        .codes-section-title { font-size: 0.72rem; font-weight: 700; color: #22c55e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; margin-top: 28px; display: flex; align-items: center; gap: 8px; }
+        .codes-section-title:first-child { margin-top: 0; }
+        
+        .codes-table { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; }
+        .codes-table-header-ext { display: grid; grid-template-columns: 60px 1.2fr 1fr 1.4fr 1.4fr auto auto; gap: 8px; padding: 12px 16px; background: #0d0d0d; border-bottom: 1px solid #1a1a1a; font-size: 0.65rem; color: #444; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; align-items: center; }
+        .codes-row-ext { display: grid; grid-template-columns: 60px 1.2fr 1fr 1.4fr 1.4fr auto auto; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #0f0f0f; align-items: center; transition: background 0.2s; }
+        .codes-row-ext:last-child { border-bottom: none; }
+        .codes-row-ext:hover { background: #0f0f0f; }
+        .codes-row-name { font-size: 0.78rem; font-weight: 700; color: #ccc; }
+        .codes-row-cat { font-size: 0.65rem; color: #444; margin-top: 2px; }
+
+        .sound-input { width: 100%; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 5px 8px; color: #fbbf24; font-family: 'Courier New', monospace; font-size: 0.72rem; font-weight: 700; text-align: left; outline: none; transition: border-color 0.2s; direction: ltr; }
+        .sound-input:focus { border-color: #fbbf24; }
+        .sound-input::placeholder { color: #333; font-style: italic; }
+
+        .test-sound-btn { padding: 4px 9px; background: rgba(251,191,36,0.10); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
+        .test-sound-btn:hover { background: rgba(251,191,36,0.22); }
+        .test-sound-btn.playing { background: rgba(251,191,36,0.3); border-color: #fbbf24; }
+
+        .sound-col-label { display: flex; align-items: center; gap: 5px; color: #fbbf24; }
+
+        .code-input { width: 100%; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 5px 8px; color: #22c55e; font-family: 'Courier New', monospace; font-size: 0.75rem; font-weight: 700; text-align: left; outline: none; transition: border-color 0.2s; direction: ltr; }
+        .name-input { width: 100%; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 5px 8px; color: #00e5ff; font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 700; outline: none; transition: border-color 0.2s; direction: rtl; }
+        .name-input:focus { border-color: #00e5ff; }
+        .img-thumb-wrap { position: relative; width: 52px; height: 46px; border-radius: 7px; overflow: hidden; background: #0d0d0d; border: 1px dashed #2a2a2a; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; flex-shrink: 0; }
+        .img-thumb-wrap:hover { border-color: #00e5ff; }
+        .img-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .img-thumb-wrap .img-edit-icon { position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; color: #00e5ff; font-size: 0.8rem; opacity: 0; transition: opacity 0.2s; }
+        .img-thumb-wrap:hover .img-edit-icon { opacity: 1; }
+        .img-thumb-wrap .img-placeholder { color: #333; font-size: 0.7rem; text-align: center; line-height: 1.3; padding: 4px; }
+        .img-url-popup { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+        .img-url-popup.open { opacity: 1; pointer-events: all; }
+        .img-url-box { background: #111; border: 1px solid #222; border-radius: 14px; padding: 24px; width: 380px; direction: rtl; }
+        .img-url-box h4 { font-size: 0.9rem; font-weight: 900; color: #00e5ff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .img-url-preview { width: 100%; height: 120px; border-radius: 9px; object-fit: cover; background: #0a0a0a; border: 1px solid #1a1a1a; display: block; margin-bottom: 12px; }
+        .img-url-input { width: 100%; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 9px 12px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.25s; direction: ltr; margin-bottom: 12px; }
+        .img-url-input:focus { border-color: #00e5ff; }
+        .img-url-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .img-url-save { padding: 9px; background: #00e5ff; color: #000; border: none; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; }
+        .img-url-save:hover { opacity: 0.85; }
+        .img-url-cancel { padding: 9px; background: transparent; color: #555; border: 1px solid #222; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .img-url-cancel:hover { border-color: #444; color: #aaa; }
+        .code-input:focus { border-color: #22c55e; }
+        .save-code-btn { padding: 5px 12px; background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .save-code-btn:hover { background: rgba(34,197,94,0.22); }
+        .save-all-codes-btn { width: 100%; padding: 12px; background: #22c55e; color: #000; border: none; border-radius: 10px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; margin-top: 14px; }
+        .save-all-codes-btn:hover { opacity: 0.85; }
+        
+        .add-product-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+        .add-product-box h4 { font-size: 0.88rem; font-weight: 900; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .add-product-box h4 i { color: #22c55e; }
+        .add-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+        .add-field label { font-size: 0.68rem; color: #555; margin-bottom: 5px; display: block; }
+        .add-field input, .add-field select { width: 100%; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 8px 10px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.25s; }
+        .add-field input:focus, .add-field select:focus { border-color: #22c55e; }
+        .add-field.full { grid-column: 1 / -1; }
+        .add-field input[type="text"][placeholder*="http"], .add-field input[placeholder*="mp3"], .add-field input[placeholder*="/car"] { direction: ltr; font-family: monospace; }
+        .add-product-btn { width: 100%; padding: 10px; background: #22c55e; color: #000; border: none; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; }
+        .add-product-btn:hover { opacity: 0.85; }
+
+        /* ===== ADMIN PAGE ===== */
+        #adminPage { display: none; position: fixed; inset: 0; background: #080808; z-index: 4500; overflow-y: auto; direction: rtl; }
+        #adminPage.open { display: block; }
+        .admin-page-header { background: rgba(8,8,8,0.98); border-bottom: 1px solid #1a1a1a; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
+        .admin-page-header h2 { font-size: 1.1rem; font-weight: 900; color: #ef4444; display: flex; align-items: center; gap: 9px; }
+        .admin-back-btn { display: flex; align-items: center; gap: 7px; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 8px 16px; color: #aaa; font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+        .admin-back-btn:hover { border-color: #ef4444; color: #ef4444; }
+        .admin-body { max-width: 900px; margin: 0 auto; padding: 28px 22px 80px; }
+        .admin-login-box { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 32px 28px; max-width: 400px; margin: 60px auto; text-align: center; }
+        .admin-login-box h3 { font-size: 1rem; font-weight: 900; color: #ef4444; margin-bottom: 6px; }
+        .admin-login-box p { font-size: 0.72rem; color: #444; margin-bottom: 22px; }
+        .admin-login-field { margin-bottom: 14px; text-align: right; }
+        .admin-login-field label { font-size: 0.72rem; color: #555; margin-bottom: 5px; display: block; }
+        .admin-login-field input { width: 100%; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 10px 13px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.82rem; outline: none; transition: border-color 0.25s; direction: rtl; }
+        .admin-login-field input:focus { border-color: #ef4444; }
+        .admin-login-btn { width: 100%; padding: 11px; background: #ef4444; color: #fff; border: none; border-radius: 9px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 900; cursor: pointer; margin-top: 4px; transition: all 0.2s; }
+        .admin-login-btn:hover { opacity: 0.85; }
+        .admin-login-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: 7px; padding: 8px 12px; font-size: 0.73rem; color: #ef4444; margin-bottom: 12px; display: none; }
+        .admin-login-error.show { display: block; }
+        .admin-panel-content { display: none; }
+        .admin-panel-content.visible { display: block; }
+        .admin-section-title { font-size: 0.72rem; font-weight: 700; color: #ef4444; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; margin-top: 28px; display: flex; align-items: center; gap: 8px; }
+        .admin-section-title:first-child { margin-top: 0; }
+        .admin-timer-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+        .admin-timer-box h4 { font-size: 0.88rem; font-weight: 900; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .admin-timer-box h4 i { color: #ffb400; }
+        .timer-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+        .timer-field label { font-size: 0.68rem; color: #555; margin-bottom: 5px; display: block; }
+        .timer-field input { width: 100%; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 8px 10px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.25s; }
+        .timer-field input:focus { border-color: #ffb400; }
+        .timer-display { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 10px; padding: 14px; text-align: center; margin-bottom: 14px; }
+        .timer-display .timer-label { font-size: 0.65rem; color: #444; margin-bottom: 6px; letter-spacing: 2px; text-transform: uppercase; }
+        .timer-display .timer-clock { font-size: 2rem; font-weight: 900; color: #ffb400; letter-spacing: 4px; font-variant-numeric: tabular-nums; }
+        .timer-display .timer-clock.expired { color: #ef4444; }
+        .set-timer-btn { width: 100%; padding: 10px; background: #ffb400; color: #000; border: none; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; }
+        .set-timer-btn:hover { opacity: 0.85; }
+        .clear-timer-btn { width: 100%; padding: 8px; background: transparent; color: #555; border: 1px solid #222; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+        .clear-timer-btn:hover { border-color: #ef4444; color: #ef4444; }
+        .price-table { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; }
+        .price-table-header { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; padding: 12px 16px; background: #0d0d0d; border-bottom: 1px solid #1a1a1a; font-size: 0.68rem; color: #444; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .price-row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #0f0f0f; align-items: center; transition: background 0.2s; }
+        .price-row:last-child { border-bottom: none; }
+        .price-row:hover { background: #0f0f0f; }
+        .price-row-name { font-size: 0.78rem; font-weight: 700; color: #ccc; }
+        .price-row-cat { font-size: 0.65rem; color: #444; margin-top: 2px; }
+        .price-input { width: 80px; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 5px 8px; color: #ffb400; font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 700; text-align: center; outline: none; transition: border-color 0.2s; }
+        .price-input:focus { border-color: #ffb400; }
+        .save-price-btn { padding: 5px 12px; background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .save-price-btn:hover { background: rgba(34,197,94,0.22); }
+        .save-all-btn { width: 100%; padding: 12px; background: #22c55e; color: #000; border: none; border-radius: 10px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; margin-top: 14px; }
+        .save-all-btn:hover { opacity: 0.85; }
+        .discount-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px; }
+        .discount-box h4 { font-size: 0.88rem; font-weight: 900; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .discount-box h4 i { color: #a855f7; }
+        .discount-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+        .discount-field label { font-size: 0.68rem; color: #555; margin-bottom: 5px; display: block; }
+        .discount-field input, .discount-field select { width: 100%; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 8px 10px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.25s; }
+        .discount-field input:focus, .discount-field select:focus { border-color: #a855f7; }
+        .apply-discount-btn { width: 100%; padding: 10px; background: #a855f7; color: #fff; border: none; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: opacity 0.2s; }
+        .apply-discount-btn:hover { opacity: 0.85; }
+
+        /* ===== AUTH MODAL ===== */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:6000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .modal-overlay.open { opacity:1; pointer-events:all; }
+        .modal-box { background:#0f0f0f; border:1px solid #222; border-radius:18px; padding:0; width:360px; direction:rtl; transform:scale(0.92) translateY(20px); transition:transform 0.3s; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.7); }
+        .modal-overlay.open .modal-box { transform:scale(1) translateY(0); }
+        .modal-header { background:#111; border-bottom:1px solid #1a1a1a; padding:20px 22px 0; }
+        .modal-brand { text-align:center; padding-bottom:16px; }
+        .modal-brand h2 { font-size:1.2rem; font-weight:900; }
+        .modal-brand h2 span { color:#00e5ff; }
+        .modal-brand p { font-size:0.65rem; color:#333; letter-spacing:3px; text-transform:uppercase; margin-top:3px; }
+        .auth-tabs { display:flex; gap:0; }
+        .auth-tab { flex:1; background:none; border:none; border-bottom:2px solid transparent; padding:10px; color:#444; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.25s; text-align:center; }
+        .auth-tab.active { color:#00e5ff; border-bottom-color:#00e5ff; }
+        .modal-body { padding:22px; }
+        .auth-panel { display:none; }
+        .auth-panel.active { display:block; }
+        .modal-field { margin-bottom:13px; }
+        .modal-field label { font-size:0.72rem; color:#555; margin-bottom:5px; display:block; }
+        .modal-field input { width:100%; background:#0d0d0d; border:1px solid #222; border-radius:8px; padding:10px 13px; color:white; font-family:'Cairo',sans-serif; font-size:0.82rem; outline:none; transition:border-color 0.25s; direction:rtl; }
+        .modal-field input:focus { border-color:#00e5ff; }
+        .modal-field input::placeholder { color:#333; }
+        .modal-submit { width:100%; padding:11px; background:#00e5ff; color:#000; border:none; border-radius:9px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:900; cursor:pointer; margin-top:4px; transition:all 0.2s; }
+        .modal-submit:hover { opacity:0.85; transform:translateY(-1px); }
+        .modal-submit.yellow { background:#ffb400; }
+        .modal-close-x { position:absolute; top:14px; left:14px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; color:#555; font-size:0.85rem; cursor:pointer; transition:all 0.2s; width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+        .modal-close-x:hover { color:#fff; border-color:#444; }
+        .modal-error { background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:7px; padding:8px 12px; font-size:0.73rem; color:#ef4444; margin-bottom:12px; display:none; }
+        .modal-error.show { display:block; }
+
+        /* ===== CODE MODAL ===== */
+        .code-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:7000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .code-modal-overlay.open { opacity:1; pointer-events:all; }
+        .code-modal-box { background:#0f0f0f; border:1px solid #1e1e1e; border-radius:14px; padding:24px 22px; width:360px; direction:rtl; transform:scale(0.92); transition:transform 0.3s; }
+        .code-modal-overlay.open .code-modal-box { transform:scale(1); }
+        .code-modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+        .code-modal-header h4 { font-size:0.9rem; font-weight:900; color:#00e5ff; }
+        .code-modal-close { background:none; border:none; color:#444; font-size:1rem; cursor:pointer; transition:color 0.2s; }
+        .code-modal-close:hover { color:#fff; }
+        .code-block { background:#070707; border:1px solid #1a1a1a; border-radius:8px; padding:14px; font-family:'Courier New',monospace; font-size:0.75rem; color:#00e5ff; direction:ltr; text-align:left; line-height:1.6; word-break:break-all; margin-bottom:12px; max-height:140px; overflow-y:auto; }
+        .copy-btn { width:100%; padding:9px; background:#00e5ff; color:#000; border:none; border-radius:8px; font-family:'Cairo',sans-serif; font-size:0.82rem; font-weight:900; cursor:pointer; transition:opacity 0.2s; display:flex; align-items:center; justify-content:center; gap:7px; }
+        .copy-btn:hover { opacity:0.85; }
+        .copy-btn.copied { background:#22c55e; }
+
+        /* ===== TOAST ===== */
+        .toast { position:fixed; bottom:24px; left:24px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:9px; padding:10px 18px; font-size:0.78rem; font-weight:700; color:#fff; z-index:9999; transform:translateY(20px); opacity:0; transition:all 0.3s; pointer-events:none; display:flex; align-items:center; gap:8px; direction:rtl; }
+        .toast.show { transform:translateY(0); opacity:1; }
+        .toast i { color:#22c55e; }
+        .toast.error i { color:#ef4444; }
+
+        /* ===== HEADER ===== */
+        .header { text-align:center; padding:36px 20px 20px; position: relative; z-index: 1; margin-top: 47px; }
+        .logo-circle { width:100px; height:100px; border-radius:50%; border:2px solid #1e3a4a; background: radial-gradient(circle at 40% 40%, #0d1f2d, #050d14); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; box-shadow:0 0 40px rgba(0,229,255,0.12), 0 0 80px rgba(0,100,150,0.08); overflow: hidden; }
+        .logo-circle img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+        .logo-fallback { font-size: 2.5rem; font-weight: 900; color: #00e5ff; }
+        .header h1 { font-size:2.4rem; font-weight:900; letter-spacing:-0.5px; line-height:1; }
+        .header h1 span { color:#00e5ff; }
+        .header p { font-size:0.72rem; color:#444; letter-spacing:4px; text-transform:uppercase; margin-top:6px; }
+        .dev-tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 4px 14px; font-size: 0.65rem; color: rgba(255,255,255,0.18); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+
+        /* ===== SEARCH ===== */
+        .search-wrap { max-width:480px; margin:24px auto 26px; padding:0 20px; position:relative; z-index:1; }
+        .search-wrap input { width:100%; background:#111; border:1px solid #222; border-radius:10px; padding:12px 44px 12px 16px; color:white; font-family:'Cairo',sans-serif; font-size:0.88rem; text-align:center; outline:none; transition:border-color 0.3s; }
+        .search-wrap input:focus { border-color:#00e5ff; }
+        .search-wrap input::placeholder { color:#444; }
+        .search-wrap i { position:absolute; left:36px; top:50%; transform:translateY(-50%); color:#444; font-size:0.85rem; }
+
+        /* ===== NAV ===== */
+        .nav-container { display:flex; justify-content:center; gap:8px; padding:0 20px 30px; overflow-x:auto; scrollbar-width:none; flex-wrap:wrap; position: relative; z-index:1; }
+        .nav-container::-webkit-scrollbar { display:none; }
+        .category-btn { background:#111; border:1px solid #222; border-radius:8px; padding:8px 16px; display:flex; align-items:center; gap:7px; color:#777; font-family:'Cairo',sans-serif; font-size:0.8rem; font-weight:600; transition:all 0.25s; white-space:nowrap; cursor:pointer; }
+        .category-btn:hover { border-color:#333; color:#bbb; }
+        .category-btn.active { border-color:#ffb400; color:#ffb400; background:rgba(255,180,0,0.06); }
+
+        /* ===== PRODUCTS GRID ===== */
+        .products-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(270px, 1fr)); gap:18px; max-width:1380px; margin:0 auto; padding:0 22px 80px; position: relative; z-index:1; }
+
+        .card-bg { position:relative; background:#111; border-radius:14px; overflow:hidden; border:1px solid #1c1c1c; display:none; transition:transform 0.3s ease, border-color 0.3s; }
+        .card-bg.active-card { display:block; }
+        .card-bg:hover { transform:translateY(-4px); border-color:#2a2a2a; }
+        .card-img-wrap { position:relative; height:195px; overflow:hidden; }
+        .card-image { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; filter:brightness(0.72); }
+        .card-bg:hover .card-image { transform:scale(1.04); }
+        .card-tag { position:absolute; top:11px; right:11px; background:#ffb400; color:#000; font-size:0.67rem; font-weight:900; padding:3px 10px; border-radius:20px; display:flex; align-items:center; gap:5px; z-index:5; }
+        .card-tag.tag-store { background:#00e5ff; color:#000; }
+        .card-tag.tag-realestate { background:#a855f7; }
+        .card-tag.tag-gangs { background:#ef4444; }
+        .card-tag.tag-restaurants { background:#f97316; }
+        .card-tag.tag-showrooms { background:#22c55e; color:#000; }
+        .card-tag.tag-workshops { background:#eab308; color:#000; }
+        .card-tag.tag-plates { background:#ec4899; }
+        .price-badge { position:absolute; bottom:11px; left:11px; background:rgba(0,0,0,0.88); border:1px solid #2a2a2a; padding:3px 13px; border-radius:6px; font-weight:900; font-size:1.05rem; color:white; z-index:5; }
+        .price-badge.discounted { color:#22c55e; }
+        .old-price-badge { position:absolute; bottom:38px; left:11px; background:rgba(0,0,0,0.7); padding:2px 8px; border-radius:4px; font-size:0.65rem; color:#888; text-decoration:line-through; z-index:5; }
+        .discount-badge { position: absolute; top: 11px; left: 11px; background: #a855f7; color: #fff; font-size: 0.65rem; font-weight: 900; padding: 3px 9px; border-radius: 20px; z-index: 6; }
+        .card-body { padding:14px 16px 16px; }
+        .brand-name { color:#00e5ff; font-size:0.63rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:3px; }
+        .car-name { font-size:1.1rem; font-weight:900; line-height:1.25; margin-bottom:11px; color:#fff; }
+        .specs-row { display:flex; gap:14px; margin-bottom:13px; }
+        .spec-item { display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#888; }
+        .spec-icon { width:18px; height:18px; background:rgba(0,229,255,0.08); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#00e5ff; font-size:0.52rem; flex-shrink:0; }
+        .btn-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; margin-bottom:11px; }
+        .btn-action { padding:7px 5px; border-radius:7px; font-size:0.72rem; font-weight:700; font-family:'Cairo',sans-serif; display:flex; align-items:center; justify-content:center; gap:4px; cursor:pointer; border:none; transition:opacity 0.2s, transform 0.1s; }
+        .btn-action:hover { opacity:0.82; }
+        .btn-action:active { transform:scale(0.97); }
+        .btn-buy { background:#1a1a1a; color:white; border:1px solid #2a2a2a; }
+        .btn-sound { background:rgba(251,191,36,0.12); color:#fbbf24; border:1px solid rgba(251,191,36,0.2); }
+        .btn-sound.active-sound { background:rgba(251,191,36,0.25); border-color:#fbbf24; }
+        .btn-code { background:#00e5ff; color:#000; }
+        .btn-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-bottom:9px; }
+        .btn-buy-main { padding:9px 5px; border-radius:7px; font-size:0.78rem; font-weight:700; font-family:'Cairo',sans-serif; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; border:1px solid #2a2a2a; background:#1a1a1a; color:white; transition:opacity 0.2s, transform 0.1s; }
+        .btn-buy-main:hover { opacity:0.82; }
+        .btn-code-main { padding:9px 5px; border-radius:7px; font-size:0.78rem; font-weight:700; font-family:'Cairo',sans-serif; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; border:none; background:#00e5ff; color:#000; transition:opacity 0.2s, transform 0.1s; }
+        .btn-code-main:hover { opacity:0.82; }
+        .btn-cart-add { width:100%; padding:7px; border-radius:7px; background:rgba(255,180,0,0.1); color:#ffb400; border:1px solid rgba(255,180,0,0.2); font-family:'Cairo',sans-serif; font-size:0.72rem; font-weight:700; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; transition:all 0.25s; margin-bottom:9px; }
+        .btn-cart-add:hover { background:rgba(255,180,0,0.2); border-color:#ffb400; }
+        .btn-cart-add.added { background:rgba(34,197,94,0.12); color:#22c55e; border-color:rgba(34,197,94,0.3); }
+        .description { font-size:0.66rem; color:#555; line-height:1.55; border-top:1px solid #1a1a1a; padding-top:9px; }
+        .sound-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; z-index:4; }
+        .sound-overlay.playing { opacity:1; }
+        .sound-waves { display:flex; align-items:center; gap:4px; }
+        .sound-waves span { display:block; width:4px; background:#ffb400; border-radius:2px; animation:wave 0.7s ease-in-out infinite alternate; }
+        .sound-waves span:nth-child(1){height:12px;animation-delay:0s;} .sound-waves span:nth-child(2){height:24px;animation-delay:0.1s;} .sound-waves span:nth-child(3){height:18px;animation-delay:0.2s;} .sound-waves span:nth-child(4){height:28px;animation-delay:0.15s;} .sound-waves span:nth-child(5){height:14px;animation-delay:0.05s;}
+        @keyframes wave { from{transform:scaleY(0.5);} to{transform:scaleY(1.5);} }
+
+        /* Plate cards */
+        .plate-card-img { position: relative; height: 230px; overflow: hidden; background: #0d0d0d; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 16px 0; }
+        .plate-bg-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; pointer-events: none; overflow: hidden; }
+        .plate-bg-text span { font-family: 'Arial Black', Arial, sans-serif; font-weight: 900; font-size: clamp(48px, 10vw, 72px); color: rgba(255,255,255,0.055); letter-spacing: 6px; line-height: 1; white-space: nowrap; }
+        .plate-tg-logo { position: relative; z-index: 2; width: 66px; height: 66px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #1e1e1e, #0d0d0d); border: 2px solid #2a2a2a; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,255,255,0.04); margin-bottom: 10px; overflow: hidden; font-size: 1.5rem; color: #00e5ff; }
+        .plate-change-text { position: relative; z-index: 2; font-size: 0.88rem; font-weight: 900; color: #e0d8c8; margin-bottom: 12px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .license-plate { position: relative; z-index: 2; width: 100%; max-width: 240px; height: 70px; background: #e8e0c8; border-radius: 7px; border: 2px solid #ccc; display: flex; align-items: center; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3); }
+        .plate-red-strip { width: 34px; height: 100%; background: linear-gradient(180deg, #c02010, #a01808); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 7px; flex-shrink: 0; }
+        .plate-red-strip .month { font-size: 7px; font-weight: 900; color: #fff; letter-spacing: 0.5px; font-family: Arial, sans-serif; }
+        .plate-main-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 8px; position: relative; }
+        .plate-state-name { font-family: 'Arial', sans-serif; font-style: italic; font-weight: 900; font-size: 10px; color: #c03010; letter-spacing: 1px; margin-bottom: 1px; }
+        .plate-number { font-family: 'Arial Black', Arial, sans-serif; font-weight: 900; color: #1a1a1a; letter-spacing: 3px; line-height: 1; }
+        .plate-number.big { font-size: 30px; }
+        .plate-number.medium { font-size: 20px; letter-spacing: 2px; }
+        .plate-code-ref { position: absolute; top: 4px; right: 4px; font-size: 6px; color: #999; font-family: Arial, sans-serif; }
+        .empty-state { display:none; text-align:center; padding:60px 20px; color:#333; font-size:0.88rem; grid-column:1/-1; }
+        .empty-state i { font-size:2.2rem; margin-bottom:12px; display:block; }
+
+        .dynamic-product-badge { position: absolute; top: 11px; right: 11px; background: #22c55e; color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 8px; border-radius: 20px; z-index: 7; }
+
+        /* ===== ACTIVITY LOG ===== */
+        .activity-section { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
+        .activity-header { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; padding: 12px 16px; background: #0d0d0d; border-bottom: 1px solid #1a1a1a; font-size: 0.68rem; color: #444; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .activity-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #0f0f0f; align-items: center; font-size: 0.75rem; }
+        .activity-row:last-child { border-bottom: none; }
+        .activity-row:hover { background: #0f0f0f; }
+        .activity-user { font-weight: 700; color: #ccc; }
+        .activity-email { font-size: 0.65rem; color: #444; margin-top: 1px; }
+        .activity-type { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+        .activity-type.login { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+        .activity-type.logout { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+        .activity-type.order { background: rgba(255,180,0,0.12); color: #ffb400; border: 1px solid rgba(255,180,0,0.2); }
+        .activity-time { font-size: 0.68rem; color: #555; direction: ltr; text-align: left; }
+        .activity-empty { text-align: center; padding: 24px; color: #333; font-size: 0.78rem; }
+        .clear-activity-btn { padding: 6px 14px; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); border-radius: 7px; font-family: 'Cairo', sans-serif; font-size: 0.72rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .clear-activity-btn:hover { background: rgba(239,68,68,0.2); }
+
+        /* ===== HIDDEN ADMIN SECTION ===== */
+        .secret-section { display: none; }
+        .secret-section.revealed { display: block; }
+        .secret-box { background: #111; border: 1px solid rgba(168,85,247,0.2); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+        .secret-box h4 { font-size: 0.88rem; font-weight: 900; color: #a855f7; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .secret-unlock-box { background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.15); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+        .secret-unlock-box h4 { font-size: 0.82rem; font-weight: 900; color: #888; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .secret-input-row { display: flex; gap: 10px; align-items: center; }
+        .secret-input { flex: 1; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 8px 12px; color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.25s; }
+        .secret-input:focus { border-color: #a855f7; }
+        .secret-unlock-btn { padding: 8px 18px; background: rgba(168,85,247,0.15); color: #a855f7; border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .secret-unlock-btn:hover { background: rgba(168,85,247,0.25); }
+        .users-list-box { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 10px; max-height: 300px; overflow-y: auto; }
+        .user-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #111; }
+        .user-item:last-child { border-bottom: none; }
+        .user-avatar-sm { width: 34px; height: 34px; border-radius: 50%; background: #222; border: 2px solid #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; color: #00e5ff; flex-shrink: 0; }
+        .user-item-info { flex: 1; }
+        .user-item-name { font-size: 0.78rem; font-weight: 700; color: #fff; }
+        .user-item-email { font-size: 0.65rem; color: #444; margin-top: 2px; }
+        .user-delete-btn { padding: 5px 12px; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.68rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .user-delete-btn:hover { background: rgba(239,68,68,0.25); }
+
+        .delete-product-btn { padding: 5px 10px; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .delete-product-btn:hover { background: rgba(239,68,68,0.25); }
+
+    </style>
+</head>
+<body>
+
+<div class="kbab-watermark">KBAB</div>
+
+<!-- Offer Banner -->
+<div class="offer-banner" id="offerBanner">
+    <i class="fa fa-fire" style="color:#000;"></i>
+    <span id="offerBannerText">عرض خاص! خصم على جميع المنتجات</span>
+    <span class="offer-timer" id="offerBannerTimer">00:00:00</span>
+    <i class="fa fa-fire" style="color:#000;"></i>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="top-right">
+        <button class="login-btn" id="loginTriggerBtn" onclick="openAuth('login')"><i class="fa fa-user-circle"></i> تسجيل الدخول</button>
+        <div id="profileArea" onclick="toggleDropdown()">
+            <img id="profileAvatar" src="" alt="avatar">
+            <div class="online-dot"></div>
+            <span id="profileName"></span>
+            <i class="fa fa-chevron-down" style="font-size:0.55rem;color:#555;"></i>
+            <div id="profileDropdown">
+                <div class="dropdown-info">
+                    <div class="d-name" id="dropdownName"></div>
+                    <div class="d-email" id="dropdownEmail"></div>
+                </div>
+                <button class="dropdown-btn" onclick="event.stopPropagation(); openAuth('profile')"><i class="fa fa-user-edit"></i> تعديل الحساب</button>
+                <button class="dropdown-btn logout" onclick="event.stopPropagation(); doLogout()"><i class="fa fa-sign-out-alt"></i> تسجيل الخروج</button>
+            </div>
+        </div>
+        <button class="contact-topbar-btn" onclick="openContact()"><i class="fab fa-discord"></i> تواصل معنا</button>
+        <button class="codes-topbar-btn" onclick="openCodesPage()"><i class="fa fa-code"></i> إدارة الكودات</button>
+        <button class="admin-topbar-btn" onclick="openAdmin()"><i class="fa fa-shield-alt"></i> الإدارة</button>
+    </div>
+    <div class="top-left">
+        <button class="cart-btn" onclick="openCart()">
+            <i class="fa fa-shopping-basket"></i> السلة
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCartOnOverlay(event)">
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fa fa-shopping-basket"></i> سلة الشراء</h3>
+            <button class="cart-close" onclick="closeCart()"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty"><i class="fa fa-shopping-basket"></i> السلة فارغة</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>المجموع</span><span id="cartTotal">$0</span></div>
+            <button class="cart-checkout" onclick="goToOrders()"><i class="fa fa-check-circle"></i> إتمام الطلب</button>
+        </div>
+    </div>
+</div>
+
+<!-- ORDERS PAGE -->
+<div id="ordersPage">
+    <div class="orders-header">
+        <h2><i class="fa fa-receipt"></i> تفاصيل الطلب</h2>
+        <button class="orders-back-btn" onclick="closeOrders()"><i class="fa fa-arrow-right"></i> رجوع للمتجر</button>
+    </div>
+    <div class="orders-body" id="ordersBody"></div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contactPage">
+    <div class="contact-page-header">
+        <h2><i class="fab fa-discord"></i> تواصل معنا</h2>
+        <button class="contact-back-btn" onclick="closeContact()"><i class="fa fa-arrow-right"></i> رجوع للمتجر</button>
+    </div>
+    <div class="contact-body">
+        <div class="contact-hero">
+            <div class="discord-big-icon"><i class="fab fa-discord"></i></div>
+            <h3>تواصل معنا عبر Discord</h3>
+            <p>للشراء أو الاستفسار عن أي منتج، انضم إلى سيرفرنا على ديسكورد وافتح تذكرة دعم وسيتم خدمتك في أقرب وقت</p>
+            <a href="https://discord.gg/hSWRsJvY" target="_blank" class="discord-join-btn"><i class="fab fa-discord"></i> انضم للسيرفر الآن</a>
+        </div>
+        <div class="contact-steps-title">📋 خطوات الشراء والتواصل</div>
+        <div class="step-card"><div class="step-num">1</div><div class="step-content"><div class="step-title"><i class="fab fa-discord"></i> ادخل السيرفر على ديسكورد</div><div class="step-desc">اضغط على زر <strong>"انضم للسيرفر الآن"</strong> في الأعلى أو انسخ الرابط وافتحه في ديسكورد.</div></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-content"><div class="step-title"><i class="fa fa-ticket-alt"></i> افتح تذكرة شراء</div><div class="step-desc">بعد دخول السيرفر، ابحث عن قناة <strong>التذاكر أو الدعم</strong> وافتح تذكرة جديدة.</div></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-content"><div class="step-title"><i class="fa fa-list-alt"></i> اذكر المنتجات التي تريدها</div><div class="step-desc">اكتب اسم المنتج والكود الخاص به (تجده بالضغط على زر <strong style="color:#00e5ff;">كود</strong> في كل منتج).</div></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-content"><div class="step-title"><i class="fa fa-headset"></i> انتظر رد الإدارة</div><div class="step-desc">سيرد عليك أحد أعضاء فريق <strong>Target Detroit</strong> في أقرب وقت ممكن.</div></div></div>
+        <div class="info-cards">
+            <div class="info-card"><div class="info-card-icon green"><i class="fa fa-headset"></i></div><div class="info-card-text"><div class="ic-title">وقت الدعم</div><div class="ic-val">24 / 7</div></div></div>
+            <div class="info-card"><div class="info-card-icon yellow"><i class="fa fa-bolt"></i></div><div class="info-card-text"><div class="ic-title">سرعة الرد</div><div class="ic-val">سريع جداً</div></div></div>
+            <div class="info-card"><div class="info-card-icon blue"><i class="fa fa-shield-alt"></i></div><div class="info-card-text"><div class="ic-title">الأمان</div><div class="ic-val">100% آمن</div></div></div>
+            <div class="info-card"><div class="info-card-icon purple"><i class="fab fa-discord"></i></div><div class="info-card-text"><div class="ic-title">المنصة</div><div class="ic-val">Discord فقط</div></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CODES MANAGER PAGE ===== -->
+<div id="codesPage">
+    <div class="codes-page-header">
+        <h2><i class="fa fa-code"></i> إدارة الكودات</h2>
+        <button class="codes-back-btn" onclick="closeCodesPage()"><i class="fa fa-arrow-right"></i> رجوع للمتجر</button>
+    </div>
+    <div class="codes-body">
+        <div id="codesLoginSection">
+            <div class="codes-login-box">
+                <h3><i class="fa fa-terminal"></i> دخول إدارة الكودات</h3>
+                <p>أدخل كلمة مرور الإدارة لتعديل كودات المنتجات</p>
+                <div class="codes-login-error" id="codesLoginError"></div>
+                <div class="codes-login-field">
+                    <label><i class="fa fa-key"></i> كلمة مرور الإدارة</label>
+                    <input type="password" id="codesPassInput" placeholder="••••••••">
+                </div>
+                <button class="codes-login-btn" onclick="checkCodesPass()"><i class="fa fa-sign-in-alt"></i> دخول</button>
+            </div>
+        </div>
+
+        <div id="codesPanelContent" class="codes-panel-content">
+            <div class="codes-section-title"><i class="fa fa-plus-circle"></i> إضافة منتج جديد</div>
+            <div class="add-product-box">
+                <h4><i class="fa fa-plus"></i> منتج جديد مع كوده وصوته</h4>
+                <div class="add-fields">
+                    <div class="add-field">
+                        <label>اسم المنتج</label>
+                        <input type="text" id="newProductName" placeholder="مثال: Ferrari 488">
+                    </div>
+                    <div class="add-field">
+                        <label>التصنيف</label>
+                        <select id="newProductCategory">
+                            <option value="special">سيارات خاصة</option>
+                            <option value="store">سيارات متجر</option>
+                            <option value="realestate">العقار</option>
+                            <option value="gangs">العصابات</option>
+                            <option value="restaurants">المطاعم</option>
+                            <option value="showrooms">المعارض</option>
+                            <option value="workshops">الورشات</option>
+                            <option value="plates">اللوحات</option>
+                        </select>
+                    </div>
+                    <div class="add-field">
+                        <label>السعر ($)</label>
+                        <input type="number" id="newProductPrice" placeholder="50" min="0">
+                    </div>
+                    <div class="add-field">
+                        <label>رابط الصورة</label>
+                        <input type="text" id="newProductImage" placeholder="https://...">
+                    </div>
+                    <div class="add-field full">
+                        <label>الكود</label>
+                        <input type="text" id="newProductCode" placeholder="/car vehicle_name" style="direction:ltr; font-family:monospace;">
+                    </div>
+                    <div class="add-field full">
+                        <label><i class="fa fa-volume-up" style="color:#fbbf24;margin-left:4px;"></i> رابط الصوت (اختياري - mp3/ogg)</label>
+                        <input type="text" id="newProductSound" placeholder="https://example.com/sound.mp3" style="direction:ltr; font-family:monospace; border-color: rgba(251,191,36,0.3); color:#fbbf24;">
+                    </div>
+                    <div class="add-field full">
+                        <label>الوصف</label>
+                        <input type="text" id="newProductDesc" placeholder="وصف قصير للمنتج">
+                    </div>
+                </div>
+                <button class="add-product-btn" onclick="addNewProduct()"><i class="fa fa-plus-circle"></i> إضافة المنتج</button>
+            </div>
+
+            <div class="codes-section-title"><i class="fa fa-edit"></i> تعديل كودات وأصوات المنتجات الحالية</div>
+            <div style="display:flex;align-items:center;gap:18px;margin-bottom:12px;font-size:0.7rem;color:#555;flex-wrap:wrap;">
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:#22c55e;border-radius:50%;display:inline-block;"></span> الكود</span>
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:#fbbf24;border-radius:50%;display:inline-block;"></span> رابط الصوت — اضغط <i class="fa fa-play" style="color:#fbbf24;"></i> للاختبار</span>
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:#00e5ff;border-radius:50%;display:inline-block;"></span> اسم المنتج</span>
+            </div>
+            <div class="codes-table" id="codesTable">
+                <div class="codes-table-header-ext">
+                    <span>صورة</span>
+                    <span>المنتج</span>
+                    <span style="color:#00e5ff;">الاسم الجديد</span>
+                    <span style="color:#22c55e;">الكود</span>
+                    <span class="sound-col-label"><i class="fa fa-volume-up"></i> الصوت (رابط)</span>
+                    <span>حفظ</span>
+                    <span>حذف</span>
+                </div>
+            </div>
+            <button class="save-all-codes-btn" onclick="saveAllCodes()"><i class="fa fa-save"></i> حفظ الجميع (كودات + أصوات + أسماء)</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="adminPage">
+    <div class="admin-page-header">
+        <h2><i class="fa fa-shield-alt"></i> لوحة التحكم - المتجر</h2>
+        <button class="admin-back-btn" onclick="closeAdmin()"><i class="fa fa-arrow-right"></i> رجوع للمتجر</button>
+    </div>
+    <div class="admin-body">
+        <div id="adminLoginSection">
+            <div class="admin-login-box">
+                <h3><i class="fa fa-lock"></i> دخول الإدارة</h3>
+                <p>أدخل كلمة مرور الإدارة للمتابعة</p>
+                <div class="admin-login-error" id="adminLoginError"></div>
+                <div class="admin-login-field">
+                    <label><i class="fa fa-key"></i> كلمة مرور الإدارة</label>
+                    <input type="password" id="adminPassInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPass()">
+                </div>
+                <button class="admin-login-btn" onclick="checkAdminPass()"><i class="fa fa-sign-in-alt"></i> دخول</button>
+            </div>
+        </div>
+        <div id="adminPanelContent" class="admin-panel-content">
+            <div class="admin-section-title"><i class="fa fa-clock"></i> إدارة العروض والوقت</div>
+            <div class="admin-timer-box">
+                <h4><i class="fa fa-fire"></i> ضبط مؤقت العرض</h4>
+                <div class="timer-display">
+                    <div class="timer-label">الوقت المتبقي للعرض</div>
+                    <div class="timer-clock" id="adminTimerDisplay">00:00:00</div>
+                </div>
+                <div class="timer-fields">
+                    <div class="timer-field"><label>ساعات</label><input type="number" id="timerHours" min="0" max="99" value="0" placeholder="0"></div>
+                    <div class="timer-field"><label>دقائق</label><input type="number" id="timerMinutes" min="0" max="59" value="30" placeholder="30"></div>
+                    <div class="timer-field"><label>ثواني</label><input type="number" id="timerSeconds" min="0" max="59" value="0" placeholder="0"></div>
+                </div>
+                <div class="timer-field" style="margin-bottom:14px;">
+                    <label>نص العرض</label>
+                    <input type="text" id="offerText" value="عرض خاص! خصم على جميع المنتجات" style="width:100%;background:#0d0d0d;border:1px solid #222;border-radius:8px;padding:8px 10px;color:white;font-family:Cairo,sans-serif;font-size:0.8rem;outline:none;">
+                </div>
+                <button class="set-timer-btn" onclick="startOfferTimer()"><i class="fa fa-play"></i> تشغيل المؤقت</button>
+                <button class="clear-timer-btn" onclick="clearOfferTimer()"><i class="fa fa-stop"></i> إيقاف وإلغاء العرض</button>
+            </div>
+            <div class="discount-box" style="margin-bottom:20px;">
+                <h4><i class="fa fa-tags"></i> تطبيق خصم على الأسعار</h4>
+                <div class="discount-fields">
+                    <div class="discount-field"><label>نسبة الخصم %</label><input type="number" id="discountPercent" min="0" max="90" value="10" placeholder="10"></div>
+                    <div class="discount-field"><label>تطبيق على</label><select id="discountCategory"><option value="all">جميع المنتجات</option><option value="special">سيارات خاصة</option><option value="store">سيارات متجر</option><option value="realestate">العقار</option><option value="gangs">العصابات</option><option value="restaurants">المطاعم</option><option value="showrooms">المعارض</option><option value="workshops">الورشات</option><option value="plates">اللوحات</option></select></div>
+                </div>
+                <button class="apply-discount-btn" onclick="applyDiscount()"><i class="fa fa-percentage"></i> تطبيق الخصم</button>
+                <button class="clear-timer-btn" onclick="clearDiscount()" style="margin-top:8px;"><i class="fa fa-undo"></i> إلغاء الخصم</button>
+            </div>
+
+            <div class="admin-section-title"><i class="fa fa-history"></i> سجل النشاطات (دخول/خروج/طلبات)</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-size:0.72rem;color:#444;">آخر 50 نشاط</span>
+                <button class="clear-activity-btn" onclick="clearActivityLog()"><i class="fa fa-trash"></i> مسح السجل</button>
+            </div>
+            <div class="activity-section">
+                <div class="activity-header">
+                    <span>المستخدم</span><span>النوع</span><span>التفاصيل</span><span>الوقت</span>
+                </div>
+                <div id="activityLogBody"><div class="activity-empty">لا توجد نشاطات بعد</div></div>
+            </div>
+
+            <div class="secret-unlock-box">
+                <h4><i class="fa fa-user-secret"></i> فتح قسم المستخدمين السري</h4>
+                <div class="secret-input-row">
+                    <input type="text" id="secretIdentInput" class="secret-input" placeholder="أدخل اسم الحساب أو الإيميل...">
+                    <button class="secret-unlock-btn" onclick="checkSecretIdent()"><i class="fa fa-unlock"></i> فتح</button>
+                </div>
+                <p style="font-size:0.65rem;color:#333;margin-top:8px;">هذا القسم مخفي - لا يمكن الوصول إليه إلا بمعرفة اسم الحساب أو إيميل المالك</p>
+            </div>
+
+            <div class="secret-section" id="secretUsersSection">
+                <div class="admin-section-title" style="color:#a855f7;"><i class="fa fa-users-cog"></i> إدارة حسابات المستخدمين</div>
+                <div class="secret-box">
+                    <h4><i class="fa fa-users"></i> جميع الحسابات المسجلة</h4>
+                    <div class="users-list-box" id="usersListBox"><div class="activity-empty">لا توجد حسابات</div></div>
+                </div>
+            </div>
+
+            <div class="admin-section-title"><i class="fa fa-dollar-sign"></i> تعديل أسعار المنتجات</div>
+            <div class="price-table" id="priceTable">
+                <div class="price-table-header"><span>المنتج</span><span>السعر ($)</span><span>حفظ</span></div>
+            </div>
+            <button class="save-all-btn" onclick="saveAllPrices()"><i class="fa fa-save"></i> حفظ جميع الأسعار</button>
+        </div>
+    </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal" onclick="closeAuthOnOverlay(event)">
+    <div class="modal-box" style="position:relative;">
+        <button class="modal-close-x" onclick="closeAuth()"><i class="fa fa-times"></i></button>
+        <div class="modal-header">
+            <div class="modal-brand">
+                <h2>Target <span>Detroit</span></h2>
+                <p>EXCLUSIVE STORE</p>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')"><i class="fa fa-sign-in-alt"></i> دخول</button>
+                <button class="auth-tab" id="tabRegister" onclick="switchTab('register')"><i class="fa fa-user-plus"></i> إنشاء حساب</button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="auth-panel active" id="panelLogin">
+                <div class="modal-error" id="loginError"></div>
+                <div class="modal-field"><label><i class="fa fa-user" style="color:#00e5ff;margin-left:5px;"></i> اسم المستخدم</label><input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم"></div>
+                <div class="modal-field"><label><i class="fa fa-lock" style="color:#00e5ff;margin-left:5px;"></i> كلمة المرور</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+                <button class="modal-submit" onclick="doLogin()"><i class="fa fa-sign-in-alt"></i> دخول</button>
+                <p style="text-align:center;margin-top:12px;font-size:0.72rem;color:#333;">ما عندك حساب؟ <span style="color:#00e5ff;cursor:pointer;" onclick="switchTab('register')">سجّل الآن</span></p>
+            </div>
+            <div class="auth-panel" id="panelRegister">
+                <div class="modal-error" id="registerError"></div>
+                <div class="modal-field"><label><i class="fa fa-user" style="color:#ffb400;margin-left:5px;"></i> اسم المستخدم</label><input type="text" id="regUsername" placeholder="اختر اسم مستخدم"></div>
+                <div class="modal-field"><label><i class="fa fa-envelope" style="color:#ffb400;margin-left:5px;"></i> الإيميل (اختياري)</label><input type="email" id="regEmail" placeholder="example@email.com" dir="ltr"></div>
+                <div class="modal-field"><label><i class="fa fa-lock" style="color:#ffb400;margin-left:5px;"></i> كلمة المرور</label><input type="password" id="regPassword" placeholder="6 أحرف على الأقل"></div>
+                <div class="modal-field"><label><i class="fa fa-lock" style="color:#ffb400;margin-left:5px;"></i> تأكيد كلمة المرور</label><input type="password" id="regPasswordConfirm" placeholder="أعد كلمة المرور"></div>
+                <button class="modal-submit yellow" onclick="doRegister()"><i class="fa fa-user-plus"></i> إنشاء الحساب</button>
+                <p style="text-align:center;margin-top:12px;font-size:0.72rem;color:#333;">عندك حساب؟ <span style="color:#00e5ff;cursor:pointer;" onclick="switchTab('login')">سجّل دخولك</span></p>
+            </div>
+            <div class="auth-panel" id="panelProfile">
+                <div style="text-align:center;margin-bottom:16px;">
+                    <canvas id="avatarPreview" width="64" height="64" style="border-radius:50%;border:3px solid #ffb400;margin:0 auto;display:block;"></canvas>
+                </div>
+                <div class="modal-field"><label><i class="fa fa-user" style="color:#00e5ff;margin-left:5px;"></i> اسم المستخدم</label><input type="text" id="editUsername" placeholder="اسم المستخدم"></div>
+                <div class="modal-field"><label><i class="fa fa-envelope" style="color:#00e5ff;margin-left:5px;"></i> الإيميل</label><input type="email" id="editEmail" placeholder="example@email.com" dir="ltr"></div>
+                <button class="modal-submit" onclick="doEditProfile()"><i class="fa fa-save"></i> حفظ التعديلات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CODE MODAL -->
+<div class="code-modal-overlay" id="codeModal">
+    <div class="code-modal-box">
+        <div class="code-modal-header">
+            <h4><i class="fa fa-code"></i> كود المنتج</h4>
+            <button class="code-modal-close" onclick="closeCodeModal()"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="code-block" id="codeBlock"></div>
+        <button class="copy-btn" id="copyBtn" onclick="copyCode()"><i class="fa fa-copy"></i> نسخ الكود</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fa fa-check-circle"></i> <span id="toastMsg"></span></div>
+
+<!-- IMAGE URL POPUP -->
+<div class="img-url-popup" id="imgUrlPopup" onclick="if(event.target===this)closeImgPopup()">
+    <div class="img-url-box">
+        <h4><i class="fa fa-image"></i> تغيير صورة المنتج</h4>
+        <img id="imgUrlPreview" class="img-url-preview" src="" alt="معاينة" style="display:none;">
+        <div style="text-align:center;color:#333;font-size:0.75rem;margin-bottom:10px;" id="imgPreviewPlaceholder"><i class="fa fa-image" style="font-size:2rem;"></i><br>أدخل رابط الصورة للمعاينة</div>
+        <input type="text" class="img-url-input" id="imgUrlInput" placeholder="https://example.com/image.jpg" oninput="previewImgUrl(this.value)">
+        <div class="img-url-btns">
+            <button class="img-url-save" onclick="saveImgUrl()"><i class="fa fa-check"></i> حفظ الصورة</button>
+            <button class="img-url-cancel" onclick="closeImgPopup()"><i class="fa fa-times"></i> إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo-circle">
+        <img src="c65dc48c4c4cf578.png" alt="TD Logo">
+    </div>
+    <h1>Target <span>Detroit</span></h1>
+    <p>&nbsp; Target Detroit</p>
+    <div class="dev-tag">K B A B تطوير</div>
+</header>
+
+<!-- Search -->
+<div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="ابحث عن...">
+    <i class="fa fa-search"></i>
+</div>
+
+<!-- Nav -->
+<nav class="nav-container">
+    <button class="category-btn active" data-category="special"><i class="fa fa-crown"></i><span>سيارات الخاصة</span></button>
+    <button class="category-btn" data-category="store"><i class="fa fa-car"></i><span>سيارات المتجر</span></button>
+    <button class="category-btn" data-category="realestate"><i class="fa fa-home"></i><span>العقار</span></button>
+    <button class="category-btn" data-category="gangs"><i class="fa fa-skull"></i><span>العصابات</span></button>
+    <button class="category-btn" data-category="restaurants"><i class="fa fa-utensils"></i><span>المطاعم</span></button>
+    <button class="category-btn" data-category="showrooms"><i class="fa fa-store"></i><span>المعارض</span></button>
+    <button class="category-btn" data-category="workshops"><i class="fa fa-tools"></i><span>الورشات</span></button>
+    <button class="category-btn" data-category="plates"><i class="fa fa-id-card"></i><span>اللوحات المميزة</span></button>
+</nav>
+
+<!-- Grid -->
+<div class="products-grid" id="productsGrid">
+    <div class="card-bg active-card product-item" data-category="special" data-name="Dodge Charger SRT Hellcat 707 HP" data-price="50" data-original-price="50" data-code="/car charger_hellcat_707" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1000" class="card-image" alt="Dodge Charger"><div class="card-tag"><i class="fa fa-crown"></i> خاصة</div><div class="price-badge">$50</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Dodge</p><h3 class="car-name">Charger SRT Hellcat 707 HP</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 300</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 4</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">أداء خارق من بين أفخاذ الكونه وشراسة سيارات السباق.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="special" data-name="Bentley 2025" data-price="40" data-original-price="40" data-code="/car bentley_2025_luxury" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1000" class="card-image" alt="Bentley"><div class="card-tag"><i class="fa fa-crown"></i> خاصة</div><div class="price-badge">$40</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Bentley</p><h3 class="car-name">Bentley 2025</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 300</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 4</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">تجمع هذه التحفة الفنية بين الأداء الوحشي والفخامة البريطانية الرفيعة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="special" data-name="Mercedes S500 MANSORY" data-price="60" data-original-price="60" data-code="/car mercedes_s500_mansory" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1617531653332-bd46c16f4d68?q=80&w=1000" class="card-image" alt="Mercedes"><div class="card-tag"><i class="fa fa-crown"></i> خاصة</div><div class="price-badge">$60</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">AMG</p><h3 class="car-name">Mercedes S500 MANSORY</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 360</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 4</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">نسخة المنصوري الحصرية تأتي بمواصفات خاصة جداً ولا يمتلكها إلا القليل.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="special" data-name="Porsche 911 Turbo S" data-price="100" data-original-price="100" data-code="/car porsche_911_turbos" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1000" class="card-image" alt="Porsche"><div class="card-tag"><i class="fa fa-crown"></i> خاصة</div><div class="price-badge">$100</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Porsche</p><h3 class="car-name">911 Turbo S</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 330</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 2</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">أيقونة السرعة الألمانية بنسخة حصرية للمميزين فقط.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Nissan GTR R35" data-price="45" data-original-price="45" data-code="/car nissan_gtr_r35" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000" class="card-image" alt="Nissan GTR"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$45</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Nissan</p><h3 class="car-name">GTR R35</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 315</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 2</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">غودزيلا اليابانية جاهزة للانطلاق في شوارع المدينة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="BMW M5 Competition" data-price="60" data-original-price="60" data-code="/car bmw_m5_competition" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=1000" class="card-image" alt="BMW M5"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$60</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">BMW</p><h3 class="car-name">M5 Competition</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 305</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 4</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">سيدان ألمانية شرسة تجمع بين الفخامة والأداء المتطرف.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Mercedes AMG GT63S" data-price="55" data-original-price="55" data-code="/car mercedes_amg_gt63s" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1000" class="card-image" alt="AMG GT"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$55</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Mercedes</p><h3 class="car-name">AMG GT63S</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 315</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 4</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">النجمة الثلاثية بأعلى مستوياتها في السرعة والأناقة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Chevrolet Camaro ZL1" data-price="40" data-original-price="40" data-code="/car camaro_zl1_v8" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000" class="card-image" alt="Camaro"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$40</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Chevrolet</p><h3 class="car-name">Camaro ZL1</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 298</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 2</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">الوحش الأمريكي بمحرك V8 يزلزل الأسفلت في كل لحظة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Toyota Supra MK5" data-price="35" data-original-price="35" data-code="/car toyota_supra_mk5" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1000" class="card-image" alt="Supra"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$35</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Toyota</p><h3 class="car-name">Supra MK5</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 285</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 2</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">إعادة إحياء الأسطورة اليابانية بروح عصرية لا تُقاوم.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Audi RS6 Avant" data-price="70" data-original-price="70" data-code="/car audi_rs6_avant" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1000" class="card-image" alt="Audi RS6"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$70</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Audi</p><h3 class="car-name">RS6 Avant</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 305</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 5</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">الفاغون الألماني الذي يكذّب كل من قال إن الفخامة بطيئة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Ford Mustang GT500" data-price="50" data-original-price="50" data-code="/car ford_mustang_gt500" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000" class="card-image" alt="Mustang"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$50</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Ford</p><h3 class="car-name">Mustang GT500</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 290</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 2</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">المسطنج الأسطوري بصرخة V8 تُسمع من آخر الشارع.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="store" data-name="Lamborghini Urus S" data-price="80" data-original-price="80" data-code="/car lamborghini_urus_s" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=1000" class="card-image" alt="Urus"><div class="card-tag tag-store"><i class="fa fa-car"></i> متجر</div><div class="price-badge">$80</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">Lamborghini</p><h3 class="car-name">Urus S</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tachometer-alt"></i></span> 305</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-users"></i></span> 5</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-gas-pump"></i></span> وقود</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">SUV لامبورغيني يجمع القوة الخارقة مع المقاعد الخمسة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="realestate" data-name="قصر فينودا" data-price="250" data-original-price="250" data-code="/realestate palace_venuda" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000" class="card-image" alt="Villa"><div class="card-tag tag-realestate"><i class="fa fa-building"></i> عقار</div><div class="price-badge">$250</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">VILLA</p><h3 class="car-name">قصر فينودا</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-bed"></i></span> 5 غرف</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-water"></i></span> مسبح</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-warehouse"></i></span> كراج</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-key"></i> تملك</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">إطلالة بانورامية على البحر مع حماية أمنية متكاملة.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="gangs" data-name="مقر عصابة (فل)" data-price="500" data-original-price="500" data-code="/gang create_private_hq" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=1000" class="card-image" alt="Gang HQ"><div class="card-tag tag-gangs"><i class="fa fa-skull"></i> عصابة</div><div class="price-badge">$500</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">MAFIA</p><h3 class="car-name">مقر عصابة (فل)</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-crosshairs"></i></span> مستودع</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-shield-alt"></i></span> حماية</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-map-marker-alt"></i></span> مخفي</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-plus"></i> إنشاء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">باقة متكاملة لتأسيس عصابتك الخاصة مع شعار مخصص ومقر.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="restaurants" data-name="مطعم برجر شوت" data-price="150" data-original-price="150" data-code="/business burger_shot_ownership" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1517248135467-4c7ed9d8c47c?q=80&w=1000" class="card-image" alt="Restaurant"><div class="card-tag tag-restaurants"><i class="fa fa-utensils"></i> مطعم</div><div class="price-badge">$150</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">BUSINESS</p><h3 class="car-name">مطعم برجر شوت</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-utensils"></i></span> منيو</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-cash-register"></i></span> دخل</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-motorcycle"></i></span> توصيل</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-chart-line"></i> استثمار</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">أشهر مطعم في المدينة، فرصة استثمارية بدخل يومي ممتاز.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="showrooms" data-name="معرض سيارات" data-price="300" data-original-price="300" data-code="/showroom luxury_cardealer" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1562141989-c5c79ac8f576?q=80&w=1000" class="card-image" alt="Showroom"><div class="card-tag tag-showrooms"><i class="fa fa-store"></i> معرض</div><div class="price-badge">$300</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">LUXURY</p><h3 class="car-name">معرض سيارات</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-car"></i></span> 20 سيارة</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-file-invoice-dollar"></i></span> ضرائب</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-briefcase"></i></span> توظيف</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">كن أكبر تاجر سيارات في الولاية وأدر مبيعاتك بنفسك.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="workshops" data-name="ورشة بيني" data-price="120" data-original-price="120" data-code="/workshop benny_license" data-sound="">
+        <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1000" class="card-image" alt="Workshop"><div class="card-tag tag-workshops"><i class="fa fa-tools"></i> ورشة</div><div class="price-badge">$120</div><div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div></div>
+        <div class="card-body"><p class="brand-name">MECHANIC</p><h3 class="car-name">ورشة بيني</h3><div class="specs-row"><div class="spec-item"><span class="spec-icon"><i class="fa fa-tools"></i></span> تعديل</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-paint-roller"></i></span> صبغ</div><div class="spec-item"><span class="spec-icon"><i class="fa fa-cogs"></i></span> تزويد</div></div><button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button><div class="btn-grid"><button class="btn-action btn-buy"><i class="fa fa-key"></i> تملك</button><button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button><button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button></div><p class="description">الورشة الوحيدة القادرة على تحويل السيارات إلى وحوش حقيقية.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="plates" data-name="لوحة سيارة مميزة" data-price="50" data-original-price="50" data-code="/plate custom_plate_number1" data-sound="">
+        <div class="plate-card-img"><div class="plate-bg-text"><span>TARGET</span><span>TARGET</span><span>TARGET</span></div><div class="plate-tg-logo"><i class="fa fa-id-card"></i></div><div class="plate-change-text">غير لوحة مركبتك الآن</div><div class="license-plate"><div class="plate-red-strip"><span class="month">MAY</span></div><div class="plate-main-area"><div class="plate-state-name">San Andreas</div><div class="plate-number big">1</div><div class="plate-code-ref">E·1652215</div></div></div></div>
+        <div class="card-tag tag-plates" style="top:11px;right:11px;position:absolute;z-index:6;"><i class="fa fa-id-card"></i> لوحات</div>
+        <div class="price-badge" style="bottom:auto;position:relative;background:transparent;border:none;padding:12px 16px 4px;font-size:1rem;color:#ffb400;text-align:right;">$50</div>
+        <div class="card-body" style="padding-top:4px;"><p class="brand-name">PLATES</p><h3 class="car-name">لوحة سيارة مميزة</h3><div class="btn-row-2"><button class="btn-buy-main" onclick="handleBuy(this)"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-code-main" onclick="handleCode(this)"><i class="fa fa-thumbs-up"></i> كود</button></div><p class="description">قم بشراء لوحة فريدة ومميزة تمنح سيارتك طابعاً خاصاً.</p></div>
+    </div>
+    <div class="card-bg product-item" data-category="plates" data-name="لوحة سيارة مميزة على حسب الطلب" data-price="0" data-original-price="0" data-code="/plate custom_plate_request" data-sound="">
+        <div class="plate-card-img"><div class="plate-bg-text"><span>TARGET</span><span>TARGET</span><span>TARGET</span></div><div class="plate-tg-logo"><i class="fa fa-id-card"></i></div><div class="plate-change-text">غير لوحة مركبتك الآن</div><div class="license-plate"><div class="plate-red-strip"><span class="month">MAY</span></div><div class="plate-main-area"><div class="plate-state-name">San Andreas</div><div class="plate-number medium">TD2026</div><div class="plate-code-ref">E·1652215</div></div></div></div>
+        <div class="card-tag tag-plates" style="top:11px;right:11px;position:absolute;z-index:6;"><i class="fa fa-id-card"></i> لوحات</div>
+        <div class="price-badge" style="bottom:auto;position:relative;background:transparent;border:none;padding:12px 16px 4px;font-size:1rem;color:#ffb400;text-align:right;">$0</div>
+        <div class="card-body" style="padding-top:4px;"><p class="brand-name">PLATES</p><h3 class="car-name">لوحة سيارة مميزة على حسب الطلب</h3><div class="btn-row-2"><button class="btn-buy-main" onclick="handleBuy(this)"><i class="fa fa-shopping-cart"></i> شراء</button><button class="btn-code-main" onclick="handleCode(this)"><i class="fa fa-thumbs-up"></i> كود</button></div><p class="description">قم بشراء لوحة فريدة ومميزة تمنح سيارتك طابعاً خاصاً.</p></div>
+    </div>
+
+    <div class="empty-state" id="emptyState"><i class="fa fa-search"></i> لا توجد نتائج مطابقة</div>
+</div>
+
+<script>
+const DB_KEY = 'td_users_v2';
+const SESSION_KEY = 'td_session_v2';
+const CODES_KEY = 'td_product_codes';
+const SOUNDS_KEY = 'td_product_sounds';
+const DYNAMIC_PRODUCTS_KEY = 'td_dynamic_products';
+const ACTIVITY_LOG_KEY = 'td_activity_log';
+const SECRET_IDENT_KEY = 'td_secret_ident';
+
+const ADMIN_PASS = 'Target Detroit2026';
+const CODES_PASS = 'Target Detroit2025';
+
+let adminLoggedIn = false;
+let codesLoggedIn = false;
+
+function getUsers() { try { return JSON.parse(localStorage.getItem(DB_KEY)) || {}; } catch { return {}; } }
+function saveUsers(u) { localStorage.setItem(DB_KEY, JSON.stringify(u)); }
+function getSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY)) || null; } catch { return null; } }
+function saveSession(u) { localStorage.setItem(SESSION_KEY, JSON.stringify(u)); }
+function clearSession() { localStorage.removeItem(SESSION_KEY); }
+
+function getCodes() { try { return JSON.parse(localStorage.getItem(CODES_KEY)) || {}; } catch { return {}; } }
+function saveCodes(c) { localStorage.setItem(CODES_KEY, JSON.stringify(c)); }
+function getSounds() { try { return JSON.parse(localStorage.getItem(SOUNDS_KEY)) || {}; } catch { return {}; } }
+function saveSounds(s) { localStorage.setItem(SOUNDS_KEY, JSON.stringify(s)); }
+
+function getDynamicProducts() { try { return JSON.parse(localStorage.getItem(DYNAMIC_PRODUCTS_KEY)) || []; } catch { return []; } }
+function saveDynamicProducts(p) { localStorage.setItem(DYNAMIC_PRODUCTS_KEY, JSON.stringify(p)); }
+
+function makeAvatar(name, size = 80) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const colors = ['#00e5ff','#ffb400','#a855f7','#22c55e','#ef4444','#f97316','#ec4899','#3b82f6'];
+    const color = colors[name.charCodeAt(0) % colors.length];
+    const grad = ctx.createLinearGradient(0, 0, size, size);
+    grad.addColorStop(0, color + 'cc'); grad.addColorStop(1, color + '66');
+    ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(size/2, size/2, size/2, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#000'; ctx.font = `bold ${size*0.42}px Cairo,Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(name.charAt(0).toUpperCase(), size/2, size/2 + size*0.03);
+    return canvas.toDataURL();
+}
+
+function applySession(user) {
+    const src = makeAvatar(user.username);
+    document.getElementById('profileAvatar').src = src;
+    document.getElementById('profileName').textContent = user.username;
+    document.getElementById('dropdownName').textContent = user.username;
+    document.getElementById('dropdownEmail').textContent = user.email || 'بدون إيميل';
+    document.getElementById('loginTriggerBtn').style.display = 'none';
+    document.getElementById('profileArea').style.display = 'flex';
+}
+function clearAuthUI() {
+    document.getElementById('loginTriggerBtn').style.display = 'flex';
+    document.getElementById('profileArea').style.display = 'none';
+    document.getElementById('profileDropdown').classList.remove('open');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const session = getSession();
+    if (session) applySession(session);
+    applySavedCodesToProducts();
+    applySavedSoundsToProducts();
+    loadDynamicProducts();
+    initCartButtons();
+    initSoundButtons();
+    initAllCodeButtons();
+    rebindNav();
+});
+
+function applySavedCodesToProducts() {
+    const codes = getCodes();
+    document.querySelectorAll('.product-item').forEach(item => {
+        const name = item.getAttribute('data-name');
+        if (codes[name]) item.setAttribute('data-code', codes[name]);
+    });
+}
+
+function applySavedSoundsToProducts() {
+    const sounds = getSounds();
+    document.querySelectorAll('.product-item').forEach(item => {
+        const name = item.getAttribute('data-name');
+        if (sounds[name]) item.setAttribute('data-sound', sounds[name]);
+    });
+}
+
+function openAuth(tab) {
+    document.getElementById('authModal').classList.add('open');
+    switchTab(tab || 'login');
+    if (tab === 'profile') {
+        const s = getSession();
+        if (s) {
+            document.getElementById('editUsername').value = s.username;
+            document.getElementById('editEmail').value = s.email || '';
+            const c = document.getElementById('avatarPreview');
+            const ctx = c.getContext('2d');
+            const img = new Image();
+            img.onload = () => { ctx.clearRect(0, 0, 64, 64); ctx.drawImage(img, 0, 0, 64, 64); };
+            img.src = makeAvatar(s.username, 64);
+        }
+    }
+    clearErrors();
+}
+function closeAuth() { document.getElementById('authModal').classList.remove('open'); }
+function closeAuthOnOverlay(e) { if (e.target === document.getElementById('authModal')) closeAuth(); }
+function switchTab(tab) {
+    ['panelLogin','panelRegister','panelProfile'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.style.display = 'none'; el.classList.remove('active'); }
+    });
+    ['tabLogin','tabRegister'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+    });
+    if (tab === 'login') { const el = document.getElementById('panelLogin'); el.style.display = 'block'; el.classList.add('active'); document.getElementById('tabLogin').classList.add('active'); }
+    else if (tab === 'register') { const el = document.getElementById('panelRegister'); el.style.display = 'block'; el.classList.add('active'); document.getElementById('tabRegister').classList.add('active'); }
+    else if (tab === 'profile') { const el = document.getElementById('panelProfile'); el.style.display = 'block'; el.classList.add('active'); }
+    clearErrors();
+}
+function clearErrors() { document.querySelectorAll('.modal-error').forEach(e => { e.classList.remove('show'); e.textContent = ''; }); }
+function showError(id, msg) { const el = document.getElementById(id); el.textContent = msg; el.classList.add('show'); }
+
+function doLogin() {
+    const u = document.getElementById('loginUsername').value.trim();
+    const p = document.getElementById('loginPassword').value;
+    if (!u) { showError('loginError', '⚠️ أدخل اسم المستخدم'); return; }
+    if (!p) { showError('loginError', '⚠️ أدخل كلمة المرور'); return; }
+    const users = getUsers(); const user = users[u.toLowerCase()];
+    if (!user) { showError('loginError', '❌ الحساب غير موجود'); return; }
+    if (user.password !== btoa(p)) { showError('loginError', '❌ كلمة المرور غلط'); return; }
+    saveSession({ username: user.username, email: user.email || '' });
+    applySession(user); logActivity('login', user.username, user.email, 'تسجيل دخول');
+    closeAuth(); showToast('أهلاً ' + user.username + ' 👋');
+}
+function doRegister() {
+    const u = document.getElementById('regUsername').value.trim();
+    const em = document.getElementById('regEmail').value.trim();
+    const p = document.getElementById('regPassword').value;
+    const c = document.getElementById('regPasswordConfirm').value;
+    if (!u) { showError('registerError', '⚠️ أدخل اسم المستخدم'); return; }
+    if (u.length < 3) { showError('registerError', '⚠️ الاسم 3 أحرف على الأقل'); return; }
+    if (!p) { showError('registerError', '⚠️ أدخل كلمة المرور'); return; }
+    if (p.length < 6) { showError('registerError', '⚠️ كلمة المرور 6 أحرف على الأقل'); return; }
+    if (p !== c) { showError('registerError', '❌ كلمة المرور غير متطابقة'); return; }
+    const users = getUsers();
+    if (users[u.toLowerCase()]) { showError('registerError', '❌ اسم المستخدم موجود'); return; }
+    users[u.toLowerCase()] = { username: u, email: em, password: btoa(p) };
+    saveUsers(users); saveSession({ username: u, email: em });
+    applySession({ username: u, email: em }); logActivity('login', u, em, 'إنشاء حساب جديد');
+    closeAuth(); showToast('تم إنشاء الحساب! أهلاً ' + u + ' 🎉');
+}
+function doEditProfile() {
+    const u = document.getElementById('editUsername').value.trim();
+    const em = document.getElementById('editEmail').value.trim();
+    const s = getSession();
+    if (!u) { showToast('⚠️ أدخل اسم المستخدم'); return; }
+    const users = getUsers();
+    if (s && s.username.toLowerCase() !== u.toLowerCase()) delete users[s.username.toLowerCase()];
+    const pw = (users[(s || {}).username?.toLowerCase()] || {}).password || btoa('');
+    users[u.toLowerCase()] = { username: u, email: em, password: pw };
+    saveUsers(users); saveSession({ username: u, email: em });
+    applySession({ username: u, email: em }); closeAuth(); showToast('تم حفظ التعديلات ✓');
+}
+function doLogout() {
+    const s = getSession();
+    if (s) logActivity('logout', s.username, s.email, 'تسجيل خروج');
+    clearSession(); clearAuthUI(); showToast('تم تسجيل الخروج');
+}
+function toggleDropdown() { document.getElementById('profileDropdown').classList.toggle('open'); }
+document.addEventListener('click', function(e) {
+    const a = document.getElementById('profileArea');
+    if (a && !a.contains(e.target)) document.getElementById('profileDropdown').classList.remove('open');
+});
+document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('regPasswordConfirm').addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+
+function openContact() { document.getElementById('contactPage').classList.add('open'); }
+function closeContact() { document.getElementById('contactPage').classList.remove('open'); }
+
+function openCodesPage() {
+    document.getElementById('codesPage').classList.add('open');
+    if (!codesLoggedIn) {
+        document.getElementById('codesLoginSection').style.display = 'block';
+        document.getElementById('codesPanelContent').classList.remove('visible');
+    }
+}
+function closeCodesPage() { document.getElementById('codesPage').classList.remove('open'); }
+
+function checkCodesPass() {
+    const val = document.getElementById('codesPassInput').value;
+    if (val === CODES_PASS) {
+        codesLoggedIn = true;
+        document.getElementById('codesLoginSection').style.display = 'none';
+        document.getElementById('codesPanelContent').classList.add('visible');
+        buildCodesTable();
+        document.getElementById('codesPassInput').value = '';
+    } else {
+        const err = document.getElementById('codesLoginError');
+        err.textContent = '❌ كلمة المرور غلط';
+        err.classList.add('show');
+        setTimeout(() => err.classList.remove('show'), 2500);
+    }
+}
+document.getElementById('codesPassInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkCodesPass(); });
+
+function buildCodesTable() {
+    const table = document.getElementById('codesTable');
+    const catNames = {special:'خاصة', store:'متجر', realestate:'عقار', gangs:'عصابة', restaurants:'مطعم', showrooms:'معرض', workshops:'ورشة', plates:'لوحات'};
+    table.querySelectorAll('.codes-row-ext').forEach(r => r.remove());
+    const items = document.querySelectorAll('.product-item');
+    items.forEach((item, idx) => {
+        const name = item.getAttribute('data-name');
+        const code = item.getAttribute('data-code');
+        const sound = item.getAttribute('data-sound') || '';
+        const cat = item.getAttribute('data-category');
+        const isDynamic = item.getAttribute('data-dynamic') === 'true';
+        const imgSrc = item.querySelector('.card-image') ? item.querySelector('.card-image').src : '';
+        const row = document.createElement('div');
+        row.className = 'codes-row-ext';
+        row.innerHTML = `
+            <div class="img-thumb-wrap" onclick="openImgPopup(${idx})" title="تغيير الصورة">
+                ${imgSrc ? `<img src="${imgSrc}" alt="صورة" onerror="this.style.display='none'">` : '<div class="img-placeholder"><i class="fa fa-image"></i><br>صورة</div>'}
+                <div class="img-edit-icon"><i class="fa fa-camera"></i></div>
+            </div>
+            <div>
+                <div class="codes-row-name">${name} ${isDynamic ? '<span style="font-size:0.6rem;background:rgba(34,197,94,0.2);color:#22c55e;padding:1px 6px;border-radius:10px;">جديد</span>' : ''}</div>
+                <div class="codes-row-cat">${catNames[cat] || cat}</div>
+            </div>
+            <input type="text" class="name-input" value="${name}" data-name-idx="${idx}" placeholder="اسم جديد للمنتج">
+            <input type="text" class="code-input" value="${code}" data-idx="${idx}" placeholder="/car vehicle_name">
+            <div style="display:flex;gap:5px;align-items:center;">
+                <input type="text" class="sound-input" value="${sound}" data-sound-idx="${idx}" placeholder="https://...mp3">
+                <button class="test-sound-btn" onclick="testSoundInRow(${idx}, this)" title="اختبار الصوت">
+                    <i class="fa fa-play"></i>
+                </button>
+            </div>
+            <button class="save-code-btn" onclick="saveSingleCode(${idx}, this)"><i class="fa fa-check"></i> حفظ</button>
+            ${isDynamic ? `<button class="delete-product-btn" onclick="deleteProduct(${idx}, this)"><i class="fa fa-trash"></i> حذف</button>` : '<span style="width:52px;display:inline-block;"></span>'}
+        `;
+        table.appendChild(row);
+    });
+}
+
+let _testAudio = null;
+let _testBtn = null;
+function testSoundInRow(idx, btn) {
+    const soundInput = document.querySelector(`.sound-input[data-sound-idx="${idx}"]`);
+    const url = soundInput ? soundInput.value.trim() : '';
+    if (_testAudio && _testBtn === btn) {
+        _testAudio.pause(); _testAudio = null;
+        btn.classList.remove('playing'); btn.innerHTML = '<i class="fa fa-play"></i>';
+        _testBtn = null; return;
+    }
+    if (_testAudio) {
+        _testAudio.pause();
+        if (_testBtn) { _testBtn.classList.remove('playing'); _testBtn.innerHTML = '<i class="fa fa-play"></i>'; }
+    }
+    if (!url) { showToast('⚠️ أدخل رابط صوت أولاً', true); return; }
+    const audio = new Audio(url);
+    audio.play().then(() => {
+        _testAudio = audio; _testBtn = btn;
+        btn.classList.add('playing'); btn.innerHTML = '<i class="fa fa-stop"></i>';
+        audio.onended = () => { btn.classList.remove('playing'); btn.innerHTML = '<i class="fa fa-play"></i>'; _testAudio = null; _testBtn = null; };
+    }).catch(() => { showToast('❌ تعذّر تشغيل الصوت - تأكد من الرابط', true); });
+}
+
+function deleteProduct(idx, btn) {
+    const items = document.querySelectorAll('.product-item');
+    const item = items[idx];
+    if (!item) return;
+    if (item.getAttribute('data-dynamic') !== 'true') { showToast('لا يمكن حذف المنتجات الأصلية', true); return; }
+    const name = item.getAttribute('data-name');
+    item.remove();
+    const products = getDynamicProducts();
+    saveDynamicProducts(products.filter(p => p.name !== name));
+    const codes = getCodes(); delete codes[name]; saveCodes(codes);
+    const sounds = getSounds(); delete sounds[name]; saveSounds(sounds);
+    buildCodesTable(); buildPriceTable(); rebindNav();
+    showToast('تم حذف المنتج: ' + name);
+}
+
+function saveSingleCode(idx, btn) {
+    const items = document.querySelectorAll('.product-item');
+    const item = items[idx];
+    const codeInput = document.querySelector(`.code-input[data-idx="${idx}"]`);
+    const nameInput = document.querySelector(`.name-input[data-name-idx="${idx}"]`);
+    const soundInput = document.querySelector(`.sound-input[data-sound-idx="${idx}"]`);
+    const newCode = codeInput ? codeInput.value.trim() : '';
+    const newName = nameInput ? nameInput.value.trim() : '';
+    const newSound = soundInput ? soundInput.value.trim() : '';
+    const oldName = item.getAttribute('data-name');
+    const codes = getCodes();
+    const sounds = getSounds();
+    item.setAttribute('data-sound', newSound);
+    if (newCode) item.setAttribute('data-code', newCode);
+    if (newName && newName !== oldName) {
+        item.setAttribute('data-name', newName);
+        const carName = item.querySelector('.car-name');
+        if (carName) carName.textContent = newName;
+        delete codes[oldName]; delete sounds[oldName];
+        const products = getDynamicProducts();
+        const prod = products.find(p => p.name === oldName);
+        if (prod) { prod.name = newName; prod.sound = newSound; saveDynamicProducts(products); }
+    } else {
+        const products = getDynamicProducts();
+        const prod = products.find(p => p.name === oldName);
+        if (prod) { prod.sound = newSound; }
+    }
+    const finalName = (newName && newName !== oldName) ? newName : oldName;
+    if (newCode) codes[finalName] = newCode;
+    sounds[finalName] = newSound;
+    saveCodes(codes); saveSounds(sounds);
+    btn.innerHTML = '<i class="fa fa-check"></i> ✓';
+    setTimeout(() => { btn.innerHTML = '<i class="fa fa-check"></i> حفظ'; buildCodesTable(); }, 1500);
+    showToast('تم حفظ: ' + finalName);
+}
+
+function saveAllCodes() {
+    const items = document.querySelectorAll('.product-item');
+    const codes = getCodes();
+    const sounds = getSounds();
+    const products = getDynamicProducts();
+    items.forEach((item, idx) => {
+        const codeInput = document.querySelector(`.code-input[data-idx="${idx}"]`);
+        const nameInput = document.querySelector(`.name-input[data-name-idx="${idx}"]`);
+        const soundInput = document.querySelector(`.sound-input[data-sound-idx="${idx}"]`);
+        const oldName = item.getAttribute('data-name');
+        const newName = nameInput ? nameInput.value.trim() : '';
+        const newCode = codeInput ? codeInput.value.trim() : '';
+        const newSound = soundInput ? soundInput.value.trim() : '';
+        item.setAttribute('data-sound', newSound);
+        if (newName && newName !== oldName) {
+            item.setAttribute('data-name', newName);
+            const carName = item.querySelector('.car-name');
+            if (carName) carName.textContent = newName;
+            delete codes[oldName]; delete sounds[oldName];
+            const prod = products.find(p => p.name === oldName);
+            if (prod) { prod.name = newName; prod.sound = newSound; }
+        } else {
+            const prod = products.find(p => p.name === oldName);
+            if (prod) prod.sound = newSound;
+        }
+        const finalName = (newName && newName !== oldName) ? newName : oldName;
+        if (newCode) { item.setAttribute('data-code', newCode); codes[finalName] = newCode; }
+        sounds[finalName] = newSound;
+    });
+    saveDynamicProducts(products); saveCodes(codes); saveSounds(sounds);
+    buildCodesTable();
+    showToast('تم حفظ جميع الكودات والأصوات والأسماء ✓');
+}
+
+function addNewProduct() {
+    const name = document.getElementById('newProductName').value.trim();
+    const cat = document.getElementById('newProductCategory').value;
+    const price = parseInt(document.getElementById('newProductPrice').value) || 0;
+    const image = document.getElementById('newProductImage').value.trim();
+    const code = document.getElementById('newProductCode').value.trim();
+    const sound = document.getElementById('newProductSound').value.trim();
+    const desc = document.getElementById('newProductDesc').value.trim();
+    if (!name || !code) { showToast('⚠️ أدخل اسم المنتج والكود', true); return; }
+    const product = { name, cat, price, image, code, sound, desc };
+    const products = getDynamicProducts();
+    products.push(product);
+    saveDynamicProducts(products);
+    createProductCard(product);
+    const codes = getCodes(); codes[name] = code; saveCodes(codes);
+    const sounds = getSounds(); sounds[name] = sound; saveSounds(sounds);
+    document.getElementById('newProductName').value = '';
+    document.getElementById('newProductPrice').value = '';
+    document.getElementById('newProductImage').value = '';
+    document.getElementById('newProductCode').value = '';
+    document.getElementById('newProductSound').value = '';
+    document.getElementById('newProductDesc').value = '';
+    buildCodesTable();
+    showToast('تم إضافة المنتج: ' + name + ' ✓');
+}
+
+function createProductCard(product) {
+    const catTagLabels = {special:'خاصة', store:'متجر', realestate:'عقار', gangs:'عصابة', restaurants:'مطعم', showrooms:'معرض', workshops:'ورشات', plates:'لوحات'};
+    const catTagClasses = {special:'', store:'tag-store', realestate:'tag-realestate', gangs:'tag-gangs', restaurants:'tag-restaurants', showrooms:'tag-showrooms', workshops:'tag-workshops', plates:'tag-plates'};
+    const catIcons = {special:'fa-crown', store:'fa-car', realestate:'fa-building', gangs:'fa-skull', restaurants:'fa-utensils', showrooms:'fa-store', workshops:'fa-tools', plates:'fa-id-card'};
+    const defaultImg = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000';
+    const imgSrc = product.image || defaultImg;
+    const div = document.createElement('div');
+    div.className = 'card-bg product-item';
+    div.setAttribute('data-category', product.cat);
+    div.setAttribute('data-name', product.name);
+    div.setAttribute('data-price', product.price);
+    div.setAttribute('data-original-price', product.price);
+    div.setAttribute('data-code', product.code);
+    div.setAttribute('data-sound', product.sound || '');
+    div.setAttribute('data-dynamic', 'true');
+    div.innerHTML = `
+        <div class="card-img-wrap">
+            <img src="${imgSrc}" class="card-image" alt="${product.name}" onerror="this.src='${defaultImg}'">
+            <div class="card-tag ${catTagClasses[product.cat] || ''}"><i class="fa ${catIcons[product.cat] || 'fa-tag'}"></i> ${catTagLabels[product.cat] || product.cat}</div>
+            <div class="dynamic-product-badge">جديد</div>
+            <div class="price-badge">$${product.price}</div>
+            <div class="sound-overlay"><div class="sound-waves"><span></span><span></span><span></span><span></span><span></span></div></div>
+        </div>
+        <div class="card-body">
+            <p class="brand-name">NEW</p>
+            <h3 class="car-name">${product.name}</h3>
+            <div class="specs-row">
+                <div class="spec-item"><span class="spec-icon"><i class="fa fa-tag"></i></span> ${catTagLabels[product.cat] || product.cat}</div>
+                <div class="spec-item"><span class="spec-icon"><i class="fa fa-dollar-sign"></i></span> $${product.price}</div>
+            </div>
+            <button class="btn-cart-add"><i class="fa fa-shopping-basket"></i> أضف إلى السلة</button>
+            <div class="btn-grid">
+                <button class="btn-action btn-buy"><i class="fa fa-shopping-cart"></i> شراء</button>
+                <button class="btn-action btn-sound"><i class="fa fa-volume-up"></i> صوت</button>
+                <button class="btn-action btn-code"><i class="fa fa-code"></i> كود</button>
+            </div>
+            <p class="description">${product.desc || 'منتج مضاف من الإدارة.'}</p>
+        </div>
+    `;
+    const grid = document.getElementById('productsGrid');
+    grid.insertBefore(div, document.getElementById('emptyState'));
+    div.querySelector('.btn-cart-add').addEventListener('click', function() {
+        const name = div.getAttribute('data-name');
+        const price = parseInt(div.getAttribute('data-price'));
+        const ex = cart.find(i => i.name === name);
+        if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
+        updateCartUI();
+        this.classList.add('added'); this.innerHTML = '<i class="fa fa-check"></i> تمت الإضافة';
+        setTimeout(() => { this.classList.remove('added'); this.innerHTML = '<i class="fa fa-shopping-basket"></i> أضف إلى السلة'; }, 1500);
+        showToast('تمت إضافة ' + name + ' إلى السلة');
+    });
+    div.querySelector('.btn-code').addEventListener('click', function() {
+        currentCode = div.getAttribute('data-code') || '/item unknown'; openCodeModal();
+    });
+    div.querySelector('.btn-sound').addEventListener('click', function() {
+        handleSoundBtn(this, div);
+    });
+    rebindNav();
+}
+
+function loadDynamicProducts() {
+    const products = getDynamicProducts();
+    products.forEach(p => createProductCard(p));
+    if (products.length > 0) rebindNav();
+}
+
+function openAdmin() {
+    document.getElementById('adminPage').classList.add('open');
+    if (!adminLoggedIn) {
+        document.getElementById('adminLoginSection').style.display = 'block';
+        document.getElementById('adminPanelContent').classList.remove('visible');
+    } else {
+        buildActivityLog();
+    }
+}
+function closeAdmin() { document.getElementById('adminPage').classList.remove('open'); }
+
+function checkAdminPass() {
+    const val = document.getElementById('adminPassInput').value;
+    if (val === ADMIN_PASS) {
+        adminLoggedIn = true;
+        document.getElementById('adminLoginSection').style.display = 'none';
+        document.getElementById('adminPanelContent').classList.add('visible');
+        buildPriceTable(); updateAdminTimerDisplay(); buildActivityLog();
+        document.getElementById('adminPassInput').value = '';
+    } else {
+        const err = document.getElementById('adminLoginError');
+        err.textContent = '❌ كلمة المرور غلط'; err.classList.add('show');
+        setTimeout(() => err.classList.remove('show'), 2500);
+    }
+}
+document.getElementById('adminPassInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAdminPass(); });
+
+let offerTimerInterval = null, offerEndTime = null;
+function startOfferTimer() {
+    const h = parseInt(document.getElementById('timerHours').value) || 0;
+    const m = parseInt(document.getElementById('timerMinutes').value) || 0;
+    const s = parseInt(document.getElementById('timerSeconds').value) || 0;
+    const total = h * 3600 + m * 60 + s;
+    if (total <= 0) { showToast('أدخل وقتاً صحيحاً', true); return; }
+    if (offerTimerInterval) clearInterval(offerTimerInterval);
+    offerEndTime = Date.now() + total * 1000;
+    const text = document.getElementById('offerText').value || 'عرض خاص!';
+    document.getElementById('offerBannerText').textContent = text;
+    document.getElementById('offerBanner').classList.add('show');
+    offerTimerInterval = setInterval(tickOfferTimer, 1000); tickOfferTimer();
+    showToast('تم تشغيل العرض ✓');
+}
+function tickOfferTimer() {
+    const remaining = Math.max(0, Math.floor((offerEndTime - Date.now()) / 1000));
+    const h = Math.floor(remaining / 3600), m = Math.floor((remaining % 3600) / 60), s = remaining % 60;
+    const str = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    const display = document.getElementById('adminTimerDisplay');
+    const banner = document.getElementById('offerBannerTimer');
+    if (display) display.textContent = str;
+    if (banner) banner.textContent = str;
+    if (display) display.classList.toggle('expired', remaining === 0);
+    if (remaining === 0) {
+        clearInterval(offerTimerInterval); offerTimerInterval = null;
+        document.getElementById('offerBanner').classList.remove('show'); showToast('انتهى وقت العرض');
+    }
+}
+function updateAdminTimerDisplay() { if (offerEndTime) tickOfferTimer(); }
+function clearOfferTimer() {
+    if (offerTimerInterval) clearInterval(offerTimerInterval);
+    offerTimerInterval = null; offerEndTime = null;
+    document.getElementById('offerBanner').classList.remove('show');
+    const d = document.getElementById('adminTimerDisplay');
+    if (d) { d.textContent = '00:00:00'; d.classList.remove('expired'); }
+    showToast('تم إلغاء العرض');
+}
+
+function buildPriceTable() {
+    const table = document.getElementById('priceTable');
+    table.querySelectorAll('.price-row').forEach(r => r.remove());
+    const catNames = {special:'خاصة', store:'متجر', realestate:'عقار', gangs:'عصابة', restaurants:'مطعم', showrooms:'معرض', workshops:'ورشة', plates:'لوحات'};
+    document.querySelectorAll('.product-item').forEach((item, idx) => {
+        const name = item.getAttribute('data-name');
+        const price = item.getAttribute('data-price');
+        const cat = item.getAttribute('data-category');
+        const row = document.createElement('div');
+        row.className = 'price-row';
+        row.innerHTML = `
+            <div><div class="price-row-name">${name}</div><div class="price-row-cat">${catNames[cat] || cat}</div></div>
+            <input type="number" class="price-input" value="${price}" min="0" data-idx="${idx}">
+            <button class="save-price-btn" onclick="saveSinglePrice(${idx}, this)"><i class="fa fa-check"></i> حفظ</button>
+        `;
+        table.appendChild(row);
+    });
+}
+function saveSinglePrice(idx, btn) {
+    const items = document.querySelectorAll('.product-item');
+    const item = items[idx];
+    const input = document.querySelector(`.price-input[data-idx="${idx}"]`);
+    updateItemPrice(item, parseInt(input.value) || 0);
+    btn.innerHTML = '<i class="fa fa-check"></i> ✓';
+    setTimeout(() => { btn.innerHTML = '<i class="fa fa-check"></i> حفظ'; }, 1500);
+    showToast('تم حفظ سعر: ' + item.getAttribute('data-name'));
+}
+function saveAllPrices() {
+    document.querySelectorAll('.product-item').forEach((item, idx) => {
+        const input = document.querySelector(`.price-input[data-idx="${idx}"]`);
+        if (input) updateItemPrice(item, parseInt(input.value) || 0);
+    });
+    showToast('تم حفظ جميع الأسعار ✓');
+}
+function updateItemPrice(item, newPrice) {
+    item.setAttribute('data-price', newPrice); item.setAttribute('data-original-price', newPrice);
+    const badge = item.querySelector('.price-badge');
+    if (badge) badge.textContent = '$' + newPrice;
+    const oldBadge = item.querySelector('.old-price-badge');
+    if (oldBadge) oldBadge.remove();
+    if (badge) badge.classList.remove('discounted');
+    const discBadge = item.querySelector('.discount-badge');
+    if (discBadge) discBadge.remove();
+}
+
+function getActivityLog() { try { return JSON.parse(localStorage.getItem(ACTIVITY_LOG_KEY)) || []; } catch { return []; } }
+function saveActivityLog(log) { localStorage.setItem(ACTIVITY_LOG_KEY, JSON.stringify(log)); }
+function getSecretIdent() { try { return localStorage.getItem(SECRET_IDENT_KEY) || ''; } catch { return ''; } }
+function saveSecretIdent(val) { localStorage.setItem(SECRET_IDENT_KEY, val); }
+
+function logActivity(type, username, email, details) {
+    const log = getActivityLog();
+    const now = new Date();
+    log.unshift({ type, username: username || 'غير معروف', email: email || '', details: details || '',
+        date: now.toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' }),
+        time: now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        ts: now.getTime() });
+    if (log.length > 50) log.splice(50);
+    saveActivityLog(log);
+}
+function buildActivityLog() {
+    const log = getActivityLog();
+    const body = document.getElementById('activityLogBody');
+    if (!body) return;
+    if (log.length === 0) { body.innerHTML = '<div class="activity-empty">لا توجد نشاطات بعد</div>'; return; }
+    const typeLabels = { login: 'دخول', logout: 'خروج', order: 'طلب' };
+    body.innerHTML = log.map(e => `<div class="activity-row">
+        <div><div class="activity-user">${e.username}</div><div class="activity-email">${e.email || '-'}</div></div>
+        <div><span class="activity-type ${e.type}">${typeLabels[e.type] || e.type}</span></div>
+        <div style="font-size:0.68rem;color:#555;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.details || '-'}</div>
+        <div class="activity-time">${e.date}<br>${e.time}</div>
+    </div>`).join('');
+}
+function clearActivityLog() { localStorage.removeItem(ACTIVITY_LOG_KEY); buildActivityLog(); showToast('تم مسح السجل'); }
+
+function checkSecretIdent() {
+    const val = document.getElementById('secretIdentInput').value.trim().toLowerCase();
+    const saved = getSecretIdent().toLowerCase();
+    if (!saved) {
+        if (val.length >= 3) { saveSecretIdent(val); document.getElementById('secretUsersSection').classList.add('revealed'); buildUsersList(); showToast('تم ضبط الهوية السرية ✓'); }
+        else showToast('أدخل اسم أو إيميل صحيح', true);
+    } else if (val === saved) { document.getElementById('secretUsersSection').classList.add('revealed'); buildUsersList(); showToast('تم فتح القسم السري 🔓'); }
+    else { showToast('الهوية غير صحيحة ❌', true); document.getElementById('secretUsersSection').classList.remove('revealed'); }
+    document.getElementById('secretIdentInput').value = '';
+}
+function buildUsersList() {
+    const users = getUsers();
+    const box = document.getElementById('usersListBox');
+    if (!box) return;
+    const keys = Object.keys(users);
+    if (keys.length === 0) { box.innerHTML = '<div class="activity-empty">لا توجد حسابات مسجلة</div>'; return; }
+    box.innerHTML = keys.map(k => { const u = users[k]; return `<div class="user-item">
+        <div class="user-avatar-sm">${(u.username || k).charAt(0).toUpperCase()}</div>
+        <div class="user-item-info"><div class="user-item-name">${u.username || k}</div><div class="user-item-email">${u.email || 'بدون إيميل'}</div></div>
+        <button class="user-delete-btn" onclick="deleteUser('${k}')"><i class="fa fa-trash"></i> حذف</button>
+    </div>`; }).join('');
+}
+function deleteUser(key) {
+    const users = getUsers(); const uname = (users[key] || {}).username || key;
+    delete users[key]; saveUsers(users);
+    const session = getSession();
+    if (session && session.username.toLowerCase() === key) { clearSession(); clearAuthUI(); }
+    buildUsersList(); showToast('تم حذف المستخدم: ' + uname);
+}
+
+function applyDiscount() {
+    const pct = parseInt(document.getElementById('discountPercent').value) || 0;
+    const cat = document.getElementById('discountCategory').value;
+    if (pct <= 0 || pct >= 100) { showToast('أدخل نسبة خصم صحيحة', true); return; }
+    let count = 0;
+    document.querySelectorAll('.product-item').forEach(item => {
+        if (cat !== 'all' && item.getAttribute('data-category') !== cat) return;
+        const origPrice = parseInt(item.getAttribute('data-original-price')) || parseInt(item.getAttribute('data-price')) || 0;
+        if (origPrice === 0) return;
+        const discounted = Math.round(origPrice * (1 - pct / 100));
+        item.setAttribute('data-price', discounted);
+        const badge = item.querySelector('.price-badge');
+        if (badge) {
+            badge.textContent = '$' + discounted; badge.classList.add('discounted');
+            let oldBadge = item.querySelector('.old-price-badge');
+            if (!oldBadge) { oldBadge = document.createElement('div'); oldBadge.className = 'old-price-badge'; badge.parentElement.appendChild(oldBadge); }
+            oldBadge.textContent = '$' + origPrice;
+        }
+        let discBadge = item.querySelector('.discount-badge');
+        if (!discBadge) {
+            const imgWrap = item.querySelector('.card-img-wrap') || item.querySelector('.plate-card-img');
+            if (imgWrap) { discBadge = document.createElement('div'); discBadge.className = 'discount-badge'; imgWrap.appendChild(discBadge); }
+        }
+        if (discBadge) discBadge.textContent = '-' + pct + '%';
+        count++;
+    });
+    buildPriceTable(); showToast(`تم تطبيق خصم ${pct}% على ${count} منتج`);
+}
+function clearDiscount() {
+    document.querySelectorAll('.product-item').forEach(item => {
+        const origPrice = parseInt(item.getAttribute('data-original-price')) || 0;
+        if (origPrice > 0) { item.setAttribute('data-price', origPrice); const badge = item.querySelector('.price-badge'); if (badge) { badge.textContent = '$' + origPrice; badge.classList.remove('discounted'); } }
+        const oldBadge = item.querySelector('.old-price-badge'); if (oldBadge) oldBadge.remove();
+        const discBadge = item.querySelector('.discount-badge'); if (discBadge) discBadge.remove();
+    });
+    buildPriceTable(); showToast('تم إلغاء الخصم');
+}
+
+let currentCategory = 'special';
+function rebindNav() {
+    const navButtons = document.querySelectorAll('.category-btn');
+    const searchInput = document.getElementById('searchInput');
+    navButtons.forEach(button => {
+        button.onclick = function() {
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentCategory = this.getAttribute('data-category');
+            document.querySelectorAll('.product-item').forEach(item => {
+                item.classList.toggle('active-card', item.getAttribute('data-category') === currentCategory);
+            });
+            searchInput.value = ''; checkEmpty();
+        };
+    });
+    document.querySelectorAll('.product-item').forEach(item => {
+        if (!searchInput.value) item.classList.toggle('active-card', item.getAttribute('data-category') === currentCategory);
+    });
+}
+function checkEmpty() {
+    const visible = [...document.querySelectorAll('.product-item')].filter(i => i.classList.contains('active-card'));
+    document.getElementById('emptyState').style.display = visible.length === 0 ? 'block' : 'none';
+}
+document.getElementById('searchInput').addEventListener('input', function() {
+    const val = this.value.toLowerCase().trim();
+    if (!val) { document.querySelectorAll('.product-item').forEach(item => { item.classList.toggle('active-card', item.getAttribute('data-category') === currentCategory); }); checkEmpty(); return; }
+    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.product-item').forEach(item => { item.classList.toggle('active-card', item.innerText.toLowerCase().includes(val)); });
+    checkEmpty();
+});
+
+let cart = [];
+function openCart() { document.getElementById('cartOverlay').classList.add('open'); }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); }
+function closeCartOnOverlay(e) { if (e.target === document.getElementById('cartOverlay')) closeCart(); }
+function updateCartUI() {
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = '$' + total;
+    const container = document.getElementById('cartItems');
+    const empty = document.getElementById('cartEmpty');
+    [...container.children].forEach(c => { if (c !== empty) c.remove(); });
+    if (cart.length === 0) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    cart.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `<div class="cart-item-img">🏷️</div><div class="cart-item-info"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">$${item.price} × ${item.qty} = $${item.price * item.qty}</div><div class="cart-item-qty"><button class="cart-qty-btn" onclick="changeQty(${idx}, -1)"><i class="fa fa-minus"></i></button><span class="cart-qty-num">${item.qty}</span><button class="cart-qty-btn" onclick="changeQty(${idx}, 1)"><i class="fa fa-plus"></i></button></div></div><button class="cart-item-remove" onclick="removeFromCart(${idx})"><i class="fa fa-trash"></i></button>`;
+        container.appendChild(div);
+    });
+}
+function changeQty(idx, delta) { cart[idx].qty += delta; if (cart[idx].qty <= 0) cart.splice(idx, 1); updateCartUI(); }
+function removeFromCart(idx) { cart.splice(idx, 1); updateCartUI(); }
+function initCartButtons() {
+    document.querySelectorAll('.btn-cart-add').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.card-bg');
+            const name = card.getAttribute('data-name');
+            const price = parseInt(card.getAttribute('data-price'));
+            const ex = cart.find(i => i.name === name);
+            if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
+            updateCartUI();
+            this.classList.add('added'); this.innerHTML = '<i class="fa fa-check"></i> تمت الإضافة';
+            setTimeout(() => { this.classList.remove('added'); this.innerHTML = '<i class="fa fa-shopping-basket"></i> أضف إلى السلة'; }, 1500);
+            showToast('تمت إضافة ' + name + ' إلى السلة');
+        });
+    });
+}
+function handleBuy(btn) {
+    const card = btn.closest('.card-bg'); const name = card.getAttribute('data-name'); const price = parseInt(card.getAttribute('data-price'));
+    const ex = cart.find(i => i.name === name); if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
+    updateCartUI(); showToast('تمت إضافة ' + name + ' إلى السلة');
+}
+function goToOrders() {
+    if (cart.length === 0) { showToast('السلة فارغة!', true); return; }
+    closeCart();
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric' });
+    const timeStr = now.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
+    const orderId = 'TD-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+    const session = getSession();
+    logActivity('order', session ? session.username : 'زائر', session ? session.email : '', 'طلب ' + orderId + ' - ' + cart.map(i => i.name + ' x' + i.qty).join('، ') + ' ($' + total + ')');
+    let itemsHTML = cart.map(item => `<div class="order-card"><div class="order-icon">🏷️</div><div class="order-info"><div class="order-name">${item.name}</div><div class="order-meta"><span><i class="fa fa-times"></i> الكمية: ${item.qty}</span><span><i class="fa fa-dollar-sign"></i> $${item.price}</span></div></div><div class="order-price">$${item.price * item.qty}</div><div class="order-status pending">قيد المراجعة</div></div>`).join('');
+    document.getElementById('ordersBody').innerHTML = `
+        <div class="orders-section-title">📋 تفاصيل الطلب</div>
+        <div class="order-card" style="background:rgba(255,180,0,0.04);border-color:rgba(255,180,0,0.15);">
+            <div class="order-icon" style="background:rgba(255,180,0,0.12);color:#ffb400;font-size:1rem;"><i class="fa fa-receipt"></i></div>
+            <div class="order-info"><div class="order-name">رقم الطلب: ${orderId}</div><div class="order-meta"><span><i class="fa fa-calendar"></i> ${dateStr}</span><span><i class="fa fa-clock"></i> ${timeStr}</span>${session ? `<span><i class="fa fa-user"></i> ${session.username}</span>` : ''}</div></div>
+            <div class="order-status pending">جديد</div>
+        </div>
+        <div class="orders-section-title" style="margin-top:22px;">🛒 المنتجات المطلوبة</div>${itemsHTML}
+        <div class="orders-section-title" style="margin-top:22px;">💰 ملخص الفاتورة</div>
+        <div class="orders-summary-box">
+            <div class="orders-summary-row"><span>عدد المنتجات</span><span class="val">${cart.reduce((s,i)=>s+i.qty,0)} منتج</span></div>
+            <div class="orders-summary-row"><span>المجموع الفرعي</span><span class="val">$${total}</span></div>
+            <div class="orders-summary-row"><span>رسوم الخدمة</span><span class="val" style="color:#22c55e;">مجاني</span></div>
+            <div class="orders-summary-row total"><span>المجموع الكلي</span><span class="val">$${total}</span></div>
+        </div>
+        <div class="orders-discord-box" style="margin-top:16px;"><i class="fab fa-discord"></i><div><p><strong>لإتمام الطلب تواصل معنا عبر Discord</strong></p><p style="margin-top:4px;">انضم إلى سيرفرنا وافتح تذكرة دعم بذكر رقم الطلب <strong style="color:#00e5ff;">${orderId}</strong></p><p style="margin-top:8px;"><a href="https://discord.gg/hSWRsJvY" target="_blank" style="color:#7289da;font-weight:900;text-decoration:none;font-size:0.88rem;"><i class="fab fa-discord"></i> discord.gg/hSWRsJvY</a></p></div></div>
+    `;
+    document.getElementById('ordersPage').classList.add('open');
+}
+function closeOrders() { document.getElementById('ordersPage').classList.remove('open'); }
+
+function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.toggle('error', isError);
+    t.querySelector('i').className = isError ? 'fa fa-exclamation-circle' : 'fa fa-check-circle';
+    t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+let currentAudio = null, currentSoundBtn = null, currentOverlay = null;
+
+function handleSoundBtn(btn, card) {
+    const soundUrl = card.getAttribute('data-sound');
+    const overlay = card.querySelector('.sound-overlay');
+    if (currentAudio && currentSoundBtn === btn) {
+        currentAudio.pause(); currentAudio = null;
+        btn.classList.remove('active-sound'); btn.innerHTML = '<i class="fa fa-volume-up"></i> صوت';
+        if (currentOverlay) currentOverlay.classList.remove('playing');
+        currentSoundBtn = null; currentOverlay = null; return;
+    }
+    if (currentAudio) {
+        currentAudio.pause();
+        if (currentSoundBtn) { currentSoundBtn.classList.remove('active-sound'); currentSoundBtn.innerHTML = '<i class="fa fa-volume-up"></i> صوت'; }
+        if (currentOverlay) currentOverlay.classList.remove('playing');
+    }
+    if (!soundUrl) { showToast('⚠️ لا يوجد صوت لهذا المنتج - أضف رابط صوت من إدارة الكودات', true); return; }
+    const audio = new Audio(soundUrl);
+    audio.play().then(() => {
+        currentAudio = audio; currentSoundBtn = btn; currentOverlay = overlay;
+        btn.classList.add('active-sound'); btn.innerHTML = '<i class="fa fa-stop"></i> إيقاف';
+        if (overlay) overlay.classList.add('playing');
+        audio.onended = () => {
+            btn.classList.remove('active-sound'); btn.innerHTML = '<i class="fa fa-volume-up"></i> صوت';
+            if (overlay) overlay.classList.remove('playing');
+            currentAudio = null; currentSoundBtn = null; currentOverlay = null;
+        };
+    }).catch(() => { showToast('❌ تعذّر تشغيل الصوت - تأكد من الرابط', true); });
+}
+
+function initSoundButtons() {
+    document.querySelectorAll('.btn-sound').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.card-bg');
+            handleSoundBtn(this, card);
+        });
+    });
+}
+
+let currentCode = '';
+function initAllCodeButtons() {
+    document.querySelectorAll('.btn-code').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.card-bg');
+            currentCode = card.getAttribute('data-code') || '/item unknown'; openCodeModal();
+        });
+    });
+}
+function handleCode(btn) { const card = btn.closest('.card-bg'); currentCode = card.getAttribute('data-code') || '/item unknown'; openCodeModal(); }
+function openCodeModal() {
+    document.getElementById('codeBlock').textContent = currentCode;
+    document.getElementById('copyBtn').classList.remove('copied');
+    document.getElementById('copyBtn').innerHTML = '<i class="fa fa-copy"></i> نسخ الكود';
+    document.getElementById('codeModal').classList.add('open');
+}
+function closeCodeModal() { document.getElementById('codeModal').classList.remove('open'); }
+function copyCode() {
+    navigator.clipboard.writeText(currentCode).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.classList.add('copied'); btn.innerHTML = '<i class="fa fa-check"></i> تم النسخ!';
+        showToast('تم نسخ الكود بنجاح ✓');
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i> نسخ الكود'; }, 2000);
+    });
+}
+document.getElementById('codeModal').addEventListener('click', function(e) { if (e.target === this) closeCodeModal(); });
+
+let currentImgIdx = -1;
+function openImgPopup(idx) {
+    currentImgIdx = idx;
+    const items = document.querySelectorAll('.product-item');
+    const item = items[idx];
+    const imgEl = item ? item.querySelector('.card-image') : null;
+    const currentSrc = imgEl ? imgEl.src : '';
+    document.getElementById('imgUrlInput').value = currentSrc || '';
+    previewImgUrl(currentSrc);
+    document.getElementById('imgUrlPopup').classList.add('open');
+}
+function closeImgPopup() { document.getElementById('imgUrlPopup').classList.remove('open'); currentImgIdx = -1; }
+function previewImgUrl(url) {
+    const preview = document.getElementById('imgUrlPreview');
+    const placeholder = document.getElementById('imgPreviewPlaceholder');
+    if (url && url.startsWith('http')) {
+        preview.src = url; preview.style.display = 'block'; placeholder.style.display = 'none';
+        preview.onerror = () => { preview.style.display = 'none'; placeholder.style.display = 'block'; };
+    } else { preview.style.display = 'none'; placeholder.style.display = 'block'; }
+}
+function saveImgUrl() {
+    const url = document.getElementById('imgUrlInput').value.trim();
+    if (!url) { showToast('أدخل رابط صورة صحيح', true); return; }
+    if (currentImgIdx < 0) return;
+    const items = document.querySelectorAll('.product-item');
+    const item = items[currentImgIdx];
+    if (!item) return;
+    const imgEl = item.querySelector('.card-image');
+    if (imgEl) imgEl.src = url;
+    const thumb = document.querySelector(`.img-thumb-wrap[onclick="openImgPopup(${currentImgIdx})"]`);
+    if (thumb) thumb.innerHTML = `<img src="${url}" alt="صورة" onerror="this.style.display='none'"><div class="img-edit-icon"><i class="fa fa-camera"></i></div>`;
+    if (item.getAttribute('data-dynamic') === 'true') {
+        const name = item.getAttribute('data-name');
+        const products = getDynamicProducts();
+        const prod = products.find(p => p.name === name);
+        if (prod) { prod.image = url; saveDynamicProducts(products); }
+    }
+    closeImgPopup(); showToast('تم تحديث الصورة ✓');
+}
+</script>
+</body>
+</html>
